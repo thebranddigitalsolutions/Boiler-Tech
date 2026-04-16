@@ -5,7 +5,7 @@ entries.forEach((entry, index) => {
 if(entry.isIntersecting){
 setTimeout(() => {
 entry.target.classList.add('show');
-}, index * 150);
+}, index * 100);
 }
 });
 });
