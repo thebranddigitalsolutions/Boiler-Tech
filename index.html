@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lorem Tech</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+<style>
+/* ======================
+   GLOBAL ANIMATION SYSTEM
+====================== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.reveal.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.zoom-img {
+  transform: scale(1.1);
+  transition: transform 1.2s ease;
+}
+
+.zoom-img.show {
+  transform: scale(1);
+}
+
+.fade-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: all 1s ease;
+}
+
+.fade-left.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.fade-right {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: all 1s ease;
+}
+
+.fade-right.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* HERO TEXT ANIMATION */
+.hero-title span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: popUp 0.8s forwards;
+}
+
+.hero-title span:nth-child(2) { animation-delay: 0.2s; }
+.hero-title span:nth-child(3) { animation-delay: 0.4s; }
+.hero-title span:nth-child(4) { animation-delay: 0.6s; }
+
+@keyframes popUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* HOVER LIFT */
+.hover-lift {
+  transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px);
+}
+
+/* 3D perspective */
+.perspective {
+  perspective: 1200px;
+}
+
+/* floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes gridMove {
+  from { transform: translateY(0px); }
+  to { transform: translateY(80px); }
+}
+
+@keyframes scan {
+  0% { left: -120%; }
+  100% { left: 120%; }
+}
+
+.animate-scan {
+  animation: scan 3.5s linear infinite;
+}
+
+/* radial vignette */
+.bg-radial-gradient {
+  background: radial-gradient(circle at center,
+    transparent 0%,
+    rgba(0,0,0,0.4) 60%,
+    rgba(0,0,0,0.9) 100%);
+}
+/* FLOAT */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* GRID MOTION (LIGHT VERSION) */
+@keyframes gridMove {
+  from { transform: translateY(0px); }
+  to { transform: translateY(60px); }
+}
+
+/* ============================= */
+/* ===== PAGE LOADER =========== */
+/* ============================= */
+.page-loader {
+  position: fixed;
+  inset: 0;
+  background: #10141a;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.page-loader.done {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-bar {
+  width: 200px;
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.loader-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #1CB5D8, #FFA500, #7CFC00);
+  animation: loaderFill 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes loaderFill {
+  to { left: 0%; }
+}
+
+.loader-text {
+  color: white;
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+</style>
+
+</head>
+
+<body class="bg-[#F8FAFC] text-slate-900 font-inter">
+<!-- PAGE LOADER (MUST BE FIRST) -->
+<div class="page-loader" id="pageLoader">
+  <div style="text-align:center">
+    <p class="loader-text">BoilerTech Energy</p>
+    <div class="loader-bar"></div>
+  </div>
+</div>
+<!-- NAV (FULL RESPONSIVE PREMIUM) -->
+<nav class="fixed top-0 w-full z-50 bg-white/100 backdrop-blur border-b border-slate-200">
+
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+
+    <!-- LOGO -->
+    <div class="flex items-center gap-3">
+      <img src="Logo.png" alt="Logo" class="h-10 w-auto" />
+      <div class="text-black font-black text-xl">
+        Lorem <span class="text-[#1CB5D8]">Tech</span>
+      </div>
+    </div>
+
+    <!-- DESKTOP LINKS -->
+    <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+      <a href="index.html" class="text-[#1CB5D8] border-b-2 border-[#1CB5D8] pb-1">Home</a>
+      <a href="about.html" class="text-slate-700 hover:text-[#1CB5D8] transition">About</a>
+      <a href="services.html" class="text-slate-700 hover:text-[#1CB5D8] transition">Services</a>
+      <a href="products.html" class="text-slate-700 hover:text-[#1CB5D8] transition">Products</a>
+      <a href="contact.html" class="text-slate-700 hover:text-[#1CB5D8] transition">Contact</a>
+    </div>
+
+    <!-- CTA (DESKTOP) -->
+    <div class="hidden md:block">
+      <button class="bg-[#FFA500] text-white px-5 py-2 rounded-full hover:scale-105 transition shadow-md">
+        Get Quote
+      </button>
+    </div>
+
+    <!-- MOBILE BUTTON -->
+    <button id="menuBtn" class="md:hidden flex flex-col gap-1.5">
+      <span class="w-6 h-0.5 bg-black"></span>
+      <span class="w-6 h-0.5 bg-black"></span>
+      <span class="w-6 h-0.5 bg-black"></span>
+    </button>
+
+  </div>
+
+  <!-- MOBILE MENU -->
+  <!-- MOBILE MENU -->
+<div id="mobileMenu"
+  class="md:hidden bg-white border-t border-slate-200 overflow-hidden max-h-0 transition-all duration-500 ease-in-out">
+
+  <div class="flex flex-col px-6 py-4 gap-4 text-sm font-medium">
+
+    <a href="index.html" class="text-[#1CB5D8] font-bold">Home</a>
+    <a href="about.html" class="text-slate-700 hover:text-[#1CB5D8]">About</a>
+    <a href="services.html" class="text-slate-700 hover:text-[#1CB5D8]">Services</a>
+    <a href="products.html" class="text-slate-700 hover:text-[#1CB5D8]">Products</a>
+    <a href="contact.html" class="text-slate-700 hover:text-[#1CB5D8]">Contact</a>
+
+    <button class="mt-2 bg-[#FFA500] text-white px-5 py-2 rounded-full w-full">
+      Get Quote
+    </button>
+
+  </div>
+</div>
+
+</nav>
+<!-- HERO (LIGHT PREMIUM MOTION DESIGN) -->
+<section id="hero" class="relative min-h-screen flex items-center overflow-hidden pt-24 bg-[#F8FAFC]">
+
+  <!-- ===== LIGHT BACKGROUND SYSTEM ===== -->
+  <div class="absolute inset-0">
+
+    <!-- soft gradient base -->
+    <div class="absolute inset-0 bg-gradient-to-br from-white via-[#EAF6FA] to-[#F8FAFC]"></div>
+
+    <!-- animated blobs -->
+    <div class="absolute w-[500px] h-[500px] bg-[#1CB5D8]/20 blur-[120px] rounded-full top-0 left-10 animate-float"></div>
+    <div class="absolute w-[400px] h-[400px] bg-[#FFA500]/20 blur-[120px] rounded-full bottom-0 right-10 animate-float"></div>
+
+    <!-- subtle grid -->
+    <div class="absolute inset-0 opacity-[0.04]"
+      style="
+        background-image: linear-gradient(to right, #000 1px, transparent 1px),
+        linear-gradient(to bottom, #000 1px, transparent 1px);
+        background-size: 80px 80px;
+        animation: gridMove 18s linear infinite;
+      ">
+    </div>
+
+  </div>
+
+  <!-- CONTENT -->
+  <div class="relative max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-2 gap-16 items-center">
+
+    <!-- LEFT -->
+    <div class="relative">
+
+      <!-- GLASS CARD (LIGHT) -->
+      <div class="p-8 rounded-2xl bg-white/70 backdrop-blur-xl border border-white shadow-xl">
+
+        <!-- badge -->
+        <div class="inline-flex items-center gap-2 bg-[#1CB5D8]/10 text-[#1CB5D8] px-4 py-1 rounded-full mb-6">
+          <span class="w-2 h-2 bg-[#1CB5D8] rounded-full animate-pulse"></span>
+          Industrial Engineering Solutions
+        </div>
+
+        <!-- title -->
+        <h1 class="hero-title text-5xl lg:text-7xl font-black leading-tight text-slate-900">
+          <span>Engineering</span>
+          <span class="text-[#1CB5D8]">Industrial</span>
+          <span>Energy</span>
+          <span class="text-[#FFA500]">Future</span>
+        </h1>
+
+        <!-- description -->
+        <p class="text-slate-600 mt-6 text-lg max-w-xl">
+          We design and optimize high-performance industrial systems with precision and innovation.
+        </p>
+
+        <!-- buttons -->
+        <div class="flex gap-4 mt-8">
+          <button class="bg-[#1CB5D8] px-6 py-3 rounded-full text-white hover:scale-105 transition shadow-md">
+            View Work
+          </button>
+
+          <button class="border border-slate-300 px-6 py-3 rounded-full hover:bg-slate-100 transition">
+            Contact
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT IMAGE -->
+    <div class="relative flex justify-center lg:justify-end">
+
+      <div id="hero-card"
+        class="relative w-[320px] sm:w-[420px] lg:w-[500px] perspective">
+
+        <!-- soft glow -->
+        <div class="absolute inset-0 bg-gradient-to-r from-[#1CB5D8]/30 via-transparent to-[#FFA500]/30 blur-2xl rounded-full scale-110"></div>
+
+        <!-- floating image -->
+        <div class="relative z-10 animate-float" id="hero-inner">
+
+          <img
+            class="w-full rounded-2xl shadow-2xl border border-white"
+            src="boiler.jpg"
+          />
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="py-24 bg-white">
+
+  <div class="max-w-7xl mx-auto px-6 text-center mb-12 reveal">
+    <h2 class="text-4xl md:text-5xl font-black text-slate-900">
+      Results That Speak for Themselves
+    </h2>
+    <p class="text-slate-500 mt-3">
+      Delivering performance, precision, and reliability worldwide
+    </p>
+  </div>
+
+  <div class="max-w-7xl mx-auto grid md:grid-cols-4 text-center gap-10">
+
+    <div class="reveal">
+      <h2 class="text-5xl font-extrabold text-[#1CB5D8] counter" data-target="500">0</h2>
+      <p class="mt-2 text-slate-600">Projects</p>
+    </div>
+
+    <div class="reveal">
+      <h2 class="text-5xl font-extrabold text-[#FFA500] counter" data-target="98">0</h2>
+      <p class="mt-2 text-slate-600">Efficiency %</p>
+    </div>
+
+    <div class="reveal">
+      <h2 class="text-5xl font-extrabold text-[#7CFC00] counter" data-target="24">0</h2>
+      <p class="mt-2 text-slate-600">Support / 7 Days</p>
+    </div>
+
+    <div class="reveal">
+      <h2 class="text-5xl font-extrabold text-slate-900 counter" data-target="10">0</h2>
+      <p class="mt-2 text-slate-600">Years Experience</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT (ADVANCED PREMIUM SECTION) -->
+<section class="py-28 relative overflow-hidden max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+
+  <!-- BACKGROUND ORB EFFECTS -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute w-[500px] h-[500px] bg-[#1CB5D8]/10 blur-[140px] rounded-full -top-40 -left-40"></div>
+    <div class="absolute w-[400px] h-[400px] bg-[#7CFC00]/10 blur-[140px] rounded-full bottom-0 right-0"></div>
+  </div>
+
+  <!-- LEFT IMAGE (3D + FLOAT + BORDER GLOW) -->
+  <div class="relative group fade-left">
+
+    <!-- animated border -->
+    <div class="absolute -inset-1 bg-gradient-to-r from-[#1CB5D8] via-[#7CFC00] to-[#FFA500] rounded-2xl blur opacity-30 group-hover:opacity-60 transition"></div>
+
+    <!-- image wrapper -->
+    <div class="relative rounded-2xl overflow-hidden shadow-2xl hover-lift">
+      <img
+        class="w-full h-[420px] object-cover zoom-img transition-transform duration-700 group-hover:scale-105"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4aTrX5nU63f9oHCTqG1V7EzPpFHMBLQi3G4Th8dZyxtiEuPv6VuS_BCI53hpFG0RrCnpHx1sdUmlh2Cx6rrLm1h84MaxmfYROOVE_1sjcwQV1tMkHWD5dK4RMz_zzOWBbgZAC4v9oaudpI9IkBn6R1jJZCnGoHGeAtDgeW3zFL69Z8sf_fW1QAwyRAnKaBEmxsFySPAfOKtaiWwyLxGqijZOIynGsrZEvDDN05Nj0SYv5KOgs_hHMJPfWjh7ep7Mayk6KDS1ocIs"
+      />
+
+      <!-- overlay glow -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT CONTENT -->
+  <div class="relative z-10 fade-right">
+
+    <!-- badge -->
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-md border border-slate-200 mb-6 reveal">
+      <span class="w-2 h-2 bg-[#1CB5D8] rounded-full animate-pulse"></span>
+      About Our Engineering Power
+    </div>
+
+    <!-- title -->
+    <h2 class="text-4xl lg:text-5xl font-black leading-tight reveal">
+      Precision Engineering<br/>
+      <span class="text-[#1CB5D8]">Built for Industrial Scale</span>
+    </h2>
+
+    <p class="mt-5 text-slate-600 text-lg reveal">
+      We design next-generation industrial systems focused on efficiency, sustainability, and performance.
+      Our engineering approach combines real-world data with advanced optimization systems.
+    </p>
+
+    <!-- FEATURE GRID -->
+    <div class="mt-10 grid sm:grid-cols-2 gap-5">
+
+      <!-- CARD 1 -->
+      <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-sm hover-lift reveal group transition">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#1CB5D8]/10 flex items-center justify-center group-hover:scale-110 transition">
+            ⚙️
+          </div>
+          <h4 class="font-bold">Advanced Systems</h4>
+        </div>
+        <p class="text-sm text-slate-500 mt-2">
+          AI-optimized industrial control systems.
+        </p>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-sm hover-lift reveal group transition">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#7CFC00]/10 flex items-center justify-center group-hover:scale-110 transition">
+            ⚡
+          </div>
+          <h4 class="font-bold">Energy Efficiency</h4>
+        </div>
+        <p class="text-sm text-slate-500 mt-2">
+          Reduce energy usage up to 40%.
+        </p>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-sm hover-lift reveal group transition">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#FFA500]/10 flex items-center justify-center group-hover:scale-110 transition">
+            🏭
+          </div>
+          <h4 class="font-bold">Industrial Scale</h4>
+        </div>
+        <p class="text-sm text-slate-500 mt-2">
+          Built for heavy-duty operations.
+        </p>
+      </div>
+
+      <!-- CARD 4 -->
+      <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-sm hover-lift reveal group transition">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-black/5 flex items-center justify-center group-hover:scale-110 transition">
+            🧠
+          </div>
+          <h4 class="font-bold">Smart Optimization</h4>
+        </div>
+        <p class="text-sm text-slate-500 mt-2">
+          Machine learning driven control.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- bottom highlight bar -->
+    <div class="mt-10 p-4 rounded-xl bg-gradient-to-r from-[#1CB5D8]/10 to-[#7CFC00]/10 border border-slate-100 reveal">
+      <p class="text-sm text-slate-600">
+        <span class="font-bold text-slate-900">Engineering Insight:</span>
+        We continuously monitor system efficiency using real-time analytics.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- SERVICES (ADVANCED PREMIUM UPGRADE) -->
+<section class="relative py-28 bg-white overflow-hidden">
+
+  <!-- BACKGROUND GLOW ORBS -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute w-[500px] h-[500px] bg-[#1CB5D8]/10 blur-[140px] rounded-full -top-40 -left-40"></div>
+    <div class="absolute w-[400px] h-[400px] bg-[#FFA500]/10 blur-[140px] rounded-full bottom-0 right-0"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 relative z-10">
+
+    <!-- HEADER -->
+    <div class="text-center mb-16 reveal">
+      <h2 class="text-4xl md:text-5xl font-black">
+        Core <span class="text-[#1CB5D8]">Services</span>
+      </h2>
+      <p class="text-slate-500 mt-3">
+        High-performance engineering solutions for industrial systems
+      </p>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid md:grid-cols-3 gap-10">
+
+      <!-- CARD 1 -->
+      <div class="group relative p-8 rounded-2xl bg-white border border-slate-100 shadow-sm overflow-hidden hover-lift reveal">
+
+        <!-- glow border -->
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-[#1CB5D8]/20 via-transparent to-[#7CFC00]/20"></div>
+
+        <!-- light sweep -->
+        <div class="absolute -left-full top-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 group-hover:translate-x-full transition-all duration-700"></div>
+
+        <div class="relative z-10">
+          <div class="w-14 h-14 rounded-2xl bg-[#1CB5D8]/10 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+            ⚙️
+          </div>
+
+          <h3 class="text-xl font-bold mt-5 group-hover:text-[#1CB5D8] transition">
+            Installation
+          </h3>
+
+          <p class="text-slate-600 mt-2">
+            Industrial-grade system setup with precision engineering and optimization.
+          </p>
+        </div>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="group relative p-8 rounded-2xl bg-white border border-slate-100 shadow-sm overflow-hidden hover-lift reveal">
+
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-[#FFA500]/20 via-transparent to-[#1CB5D8]/20"></div>
+
+        <div class="absolute -left-full top-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 group-hover:translate-x-full transition-all duration-700"></div>
+
+        <div class="relative z-10">
+          <div class="w-14 h-14 rounded-2xl bg-[#FFA500]/10 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+            🔧
+          </div>
+
+          <h3 class="text-xl font-bold mt-5 group-hover:text-[#FFA500] transition">
+            Maintenance
+          </h3>
+
+          <p class="text-slate-600 mt-2">
+            Predictive maintenance systems ensuring zero downtime operations.
+          </p>
+        </div>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="group relative p-8 rounded-2xl bg-white border border-slate-100 shadow-sm overflow-hidden hover-lift reveal">
+
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-[#7CFC00]/20 via-transparent to-[#1CB5D8]/20"></div>
+
+        <div class="absolute -left-full top-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 group-hover:translate-x-full transition-all duration-700"></div>
+
+        <div class="relative z-10">
+          <div class="w-14 h-14 rounded-2xl bg-[#7CFC00]/10 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+            📊
+          </div>
+
+          <h3 class="text-xl font-bold mt-5 group-hover:text-[#7CFC00] transition">
+            Energy Audit
+          </h3>
+
+          <p class="text-slate-600 mt-2">
+            Deep system analysis for maximum efficiency and energy savings.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- BOTTOM STRIP -->
+    <div class="mt-16 text-center reveal">
+      <div class="inline-block px-6 py-3 rounded-full bg-slate-100 border border-slate-200 text-sm text-slate-600">
+        ⚡ Designed for industrial performance • optimized for scale • engineered for efficiency
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- INDUSTRIES (CINEMATIC SHOWCASE SECTION) -->
+<section class="relative py-28 bg-white overflow-hidden">
+
+  <!-- BACKGROUND MOTION -->
+  <div class="absolute inset-0 pointer-events-none">
+
+    <!-- soft gradient -->
+    <div class="absolute inset-0 bg-gradient-to-br from-[#F8FAFC] via-white to-[#EAF6FA]"></div>
+
+    <!-- floating lights -->
+    <div class="absolute w-[500px] h-[500px] bg-[#1CB5D8]/10 blur-[120px] rounded-full -top-40 -left-40 animate-float"></div>
+    <div class="absolute w-[400px] h-[400px] bg-[#FFA500]/10 blur-[120px] rounded-full bottom-0 right-0 animate-float"></div>
+
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-6">
+
+    <!-- HEADER -->
+    <div class="text-center mb-20 reveal">
+      <h2 class="text-4xl md:text-5xl font-black">
+        Industries We <span class="text-[#1CB5D8]">Power</span>
+      </h2>
+      <p class="text-slate-500 mt-4 text-lg">
+        Delivering engineering excellence across high-demand industrial sectors
+      </p>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid md:grid-cols-3 gap-10">
+
+      <!-- CARD 1 -->
+      <div class="group relative p-8 rounded-2xl bg-white border border-slate-100 shadow-sm overflow-hidden hover-lift reveal">
+
+        <!-- glow -->
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-[#1CB5D8]/10 via-transparent to-[#1CB5D8]/20"></div>
+
+        <!-- hover light sweep -->
+        <div class="absolute -left-full top-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 group-hover:translate-x-full transition-all duration-700"></div>
+
+        <div class="relative z-10">
+          <div class="text-3xl mb-4">🏭</div>
+          <h3 class="text-xl font-bold mb-2 group-hover:text-[#1CB5D8] transition">
+            Manufacturing Plants
+          </h3>
+          <p class="text-slate-600 text-sm">
+            High-efficiency boiler systems designed for large-scale production environments.
+          </p>
+        </div>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="group relative p-8 rounded-2xl bg-white border border-slate-100 shadow-sm overflow-hidden hover-lift reveal">
+
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-[#FFA500]/10 via-transparent to-[#FFA500]/20"></div>
+
+        <div class="absolute -left-full top-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 group-hover:translate-x-full transition-all duration-700"></div>
+
+        <div class="relative z-10">
+          <div class="text-3xl mb-4">⚡</div>
+          <h3 class="text-xl font-bold mb-2 group-hover:text-[#FFA500] transition">
+            Energy Sector
+          </h3>
+          <p class="text-slate-600 text-sm">
+            Optimized thermal systems for power plants and renewable energy integration.
+          </p>
+        </div>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="group relative p-8 rounded-2xl bg-white border border-slate-100 shadow-sm overflow-hidden hover-lift reveal">
+
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-[#7CFC00]/10 via-transparent to-[#7CFC00]/20"></div>
+
+        <div class="absolute -left-full top-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 group-hover:translate-x-full transition-all duration-700"></div>
+
+        <div class="relative z-10">
+          <div class="text-3xl mb-4">🧪</div>
+          <h3 class="text-xl font-bold mb-2 group-hover:text-[#7CFC00] transition">
+            Chemical & Process
+          </h3>
+          <p class="text-slate-600 text-sm">
+            Precision-controlled systems ensuring safety, efficiency, and reliability.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- BOTTOM STRIP -->
+    <div class="mt-20 text-center reveal">
+      <div class="inline-block px-6 py-3 rounded-full bg-slate-100 border border-slate-200 text-sm text-slate-600">
+        🚀 Trusted across 500+ industrial projects worldwide
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<!-- Footer -->
+<footer class="bg-slate-950 dark:bg-black w-full pt-20 pb-10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+<div class="col-span-1 md:col-span-1">
+<div class="text-base sm:text-lg lg:text-xl font-bold text-white mb-6">BoilerTech Energy</div>
+<p class="text-slate-500 font-inter text-sm antialiased mb-6">
+Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aut voluptates molestias eaque dolore commodi natus veritatis atque harum distinctio asperiores nemo sit repudiandae, optio dicta voluptatum culpa ad. Delectus, sequi!                </p>
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-orange-400">
+<span class="material-symbols-outlined text-sm">language</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-orange-400">
+<span class="material-symbols-outlined text-sm">mail</span>
+</div>
+</div>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Expertise</h4>
+<ul class="space-y-4">
+<li><a class="text-slate-500 hover:text-slate-300 transition-transform hover:translate-x-1 inline-block" href="#">Boiler Installation</a></li>
+<li><a class="text-slate-500 hover:text-slate-300 transition-transform hover:translate-x-1 inline-block" href="#">System Design</a></li>
+<li><a class="text-slate-500 hover:text-slate-300 transition-transform hover:translate-x-1 inline-block" href="#">Maintenance</a></li>
+<li><a class="text-slate-500 hover:text-slate-300 transition-transform hover:translate-x-1 inline-block" href="#">Energy Audit</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Company</h4>
+<ul class="space-y-4">
+<li><a class="text-slate-500 hover:text-slate-300 transition-transform hover:translate-x-1 inline-block" href="about.html">About</a></li>
+<li><a class="text-slate-500 hover:text-slate-300 transition-transform hover:translate-x-1 inline-block" href="products.html">Products</a></li>
+<li><a class="text-slate-500 hover:text-slate-300 transition-transform hover:translate-x-1 inline-block" href="services.html">Services</a></li>
+<li><a class="text-slate-500 hover:text-slate-300 transition-transform hover:translate-x-1 inline-block" href="contact.html">Contact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Global HQ</h4>
+<p class="text-slate-500 text-sm leading-relaxed">
+                    1200 Industrial Avenue<br/>
+                    Engineering District, Sector 4<br/>
+                    support@boilertech-energy.com<br/>
+                    +1 (555) 902-3000
+</p>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20 pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-slate-500 text-sm antialiased">© 2026 BoilerTech Energy. All rights reserved. Precision Industrial Engineering.</p>
+<div class="flex gap-6">
+<a class="text-slate-500 hover:text-slate-300 text-sm" href="#">Privacy Policy</a>
+<a class="text-slate-500 hover:text-slate-300 text-sm" href="#">Terms of Service</a>
+<a class="text-slate-500 hover:text-slate-300 text-sm" href="#">Cookie Policy</a>
+<a class="text-slate-500 hover:text-slate-300 text-sm" href="#">Sitemap</a>
+</div>
+</div>
+</footer>
+
+<!-- ANIMATION ENGINE -->
+<script>
+const elements = document.querySelectorAll('.reveal, .zoom-img, .fade-left, .fade-right');
+
+/* ======================
+   REVEAL ANIMATIONS
+====================== */
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+    }
+  });
+}, {
+  threshold: 0.15
+});
+
+elements.forEach(el => revealObserver.observe(el));
+
+
+/* ======================
+   COUNTER ANIMATION
+====================== */
+const counters = document.querySelectorAll(".counter");
+
+const runCounter = (counter) => {
+  const target = +counter.getAttribute("data-target");
+  let count = 0;
+  const speed = target / 80;
+
+  const update = () => {
+    if (count < target) {
+      count += speed;
+      counter.innerText = Math.ceil(count);
+      requestAnimationFrame(update);
+    } else {
+      counter.innerText = target + "+";
+    }
+  };
+
+  update();
+};
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      runCounter(entry.target);
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.6 });
+
+counters.forEach(counter => counterObserver.observe(counter));
+
+const card = document.getElementById("hero-card");
+const inner = document.getElementById("hero-inner");
+
+card.addEventListener("mousemove", (e) => {
+  const rect = card.getBoundingClientRect();
+
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+
+  const rotateX = ((y - centerY) / centerY) * -10;
+  const rotateY = ((x - centerX) / centerX) * 10;
+
+  inner.style.transform = `
+    rotateX(${rotateX}deg)
+    rotateY(${rotateY}deg)
+    scale(1.03)
+  `;
+});
+
+card.addEventListener("mouseleave", () => {
+  inner.style.transform = `
+    rotateX(0deg)
+    rotateY(0deg)
+    scale(1)
+  `;
+});
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+let open = false;
+
+menuBtn.addEventListener("click", () => {
+  open = !open;
+
+  if (open) {
+    mobileMenu.style.maxHeight = "400px";
+  } else {
+    mobileMenu.style.maxHeight = "0px";
+  }
+});
+
+</script>
+<div id="chatbot-container"></div>
+
+<script>
+fetch("chatbot.html")
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("chatbot-container").innerHTML = data;
+  });
+
+  /* ============================= */
+/* 1. PAGE LOADER               */
+/* ============================= */
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    const loader = document.getElementById("pageLoader");
+    if (loader) {
+      loader.classList.add("done");
+
+      setTimeout(() => {
+        loader.remove();
+      }, 700);
+    }
+  }, 1200); // loader duration
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BoilerTech Energy - Chat Support</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,400&family=Sora:wght@600;700&display=swap');
+
+  :root {
+    --bt-primary: #FFA500;
+    --bt-primary-dark: #1CB5D8;
+    --bt-primary-light: #7CFC00;
+    --bt-dark: #1A1D23;
+    --bt-dark-mid: #252830;
+    --bt-dark-surface: #2D3039;
+    --bt-dark-hover: #353840;
+    --bt-text: #E8E9EC;
+    --bt-text-muted: #9EA1AB;
+    --bt-accent-blue: #3B82F6;
+    --bt-accent-green: #22C55E;
+    --bt-border: rgba(255,255,255,0.06);
+    --bt-glow: rgba(232,80,28,0.25);
+    --bt-radius: 16px;
+    --bt-radius-sm: 10px;
+    --bt-shadow: 0 25px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  /* ── FLOATING TRIGGER BUTTON ── */
+  .bt-chat-trigger {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 99998;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--bt-primary), var(--bt-primary-dark));
+    box-shadow: 0 8px 32px rgba(232,80,28,0.4), 0 0 0 4px rgba(232,80,28,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: bt-pulse 3s ease-in-out infinite;
+  }
+  .bt-chat-trigger:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 40px rgba(232,80,28,0.5), 0 0 0 6px rgba(232,80,28,0.15);
+  }
+  .bt-chat-trigger svg { width: 28px; height: 28px; fill: #fff; transition: transform 0.3s ease; }
+  .bt-chat-trigger.active svg { transform: rotate(90deg); }
+
+  @keyframes bt-pulse {
+    0%, 100% { box-shadow: 0 8px 32px rgba(232,80,28,0.4), 0 0 0 4px rgba(232,80,28,0.1); }
+    50% { box-shadow: 0 8px 32px rgba(232,80,28,0.5), 0 0 0 8px rgba(232,80,28,0.08); }
+  }
+
+  /* ── Notification Badge ── */
+  .bt-badge {
+    position: absolute;
+    top: -2px; right: -2px;
+    width: 20px; height: 20px;
+    background: var(--bt-accent-green);
+    border-radius: 50%;
+    border: 3px solid var(--bt-dark);
+    animation: bt-badge-pop 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes bt-badge-pop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+
+  /* ── CHAT WINDOW ── */
+  .bt-chat-window {
+    position: fixed;
+    bottom: 104px;
+    right: 28px;
+    z-index: 99999;
+    width: 400px;
+    max-width: calc(100vw - 32px);
+    height: 600px;
+    max-height: calc(100vh - 140px);
+    background: var(--bt-dark);
+    border-radius: var(--bt-radius);
+    box-shadow: var(--bt-shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    pointer-events: none;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .bt-chat-window.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: all;
+  }
+
+  /* ── HEADER ── */
+  .bt-header {
+    background: linear-gradient(135deg, var(--bt-dark-mid), var(--bt-dark-surface));
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--bt-border);
+    position: relative;
+    overflow: hidden;
+  }
+  .bt-header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, var(--bt-glow) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .bt-header-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+  }
+  .bt-logo {
+    width: 42px; height: 42px;
+    border-radius: var(--bt-radius-sm);
+    background: linear-gradient(135deg, var(--bt-primary), var(--bt-primary-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(232,80,28,0.3);
+  }
+  .bt-logo svg { width: 22px; height: 22px; fill: #fff; }
+  .bt-header-info h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.3px;
+  }
+  .bt-header-info span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--bt-accent-green);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 2px;
+  }
+  .bt-header-info span::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--bt-accent-green);
+    border-radius: 50%;
+    display: inline-block;
+    animation: bt-online 2s ease-in-out infinite;
+  }
+  @keyframes bt-online { 0%, 100% { opacity:1; } 50% { opacity:0.4; } }
+
+  .bt-close-btn {
+    position: absolute;
+    top: 0; right: 0;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255,255,255,0.06);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .bt-close-btn:hover { background: rgba(255,255,255,0.12); }
+  .bt-close-btn svg { width: 16px; height: 16px; stroke: var(--bt-text-muted); stroke-width: 2; }
+
+  /* ── MESSAGES AREA ── */
+  .bt-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    scroll-behavior: smooth;
+    background:
+      radial-gradient(ellipse at 10% 90%, rgba(232,80,28,0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 10%, rgba(59,130,246,0.03) 0%, transparent 50%),
+      var(--bt-dark);
+  }
+  .bt-messages::-webkit-scrollbar { width: 4px; }
+  .bt-messages::-webkit-scrollbar-track { background: transparent; }
+  .bt-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+  /* ── MESSAGE BUBBLES ── */
+  .bt-msg {
+    display: flex;
+    gap: 10px;
+    max-width: 88%;
+    animation: bt-msg-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes bt-msg-in {
+    0% { opacity: 0; transform: translateY(12px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  .bt-msg.bot { align-self: flex-start; }
+  .bt-msg.user { align-self: flex-end; flex-direction: row-reverse; }
+
+  .bt-msg-avatar {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+  .bt-msg.bot .bt-msg-avatar {
+    background: linear-gradient(135deg, var(--bt-primary), var(--bt-primary-dark));
+  }
+  .bt-msg.bot .bt-msg-avatar svg { width: 14px; height: 14px; fill: #fff; }
+  .bt-msg.user .bt-msg-avatar {
+    background: linear-gradient(135deg, var(--bt-accent-blue), #2563EB);
+  }
+  .bt-msg.user .bt-msg-avatar svg { width: 14px; height: 14px; fill: #fff; }
+
+  .bt-msg-bubble {
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--bt-text);
+  }
+  .bt-msg.bot .bt-msg-bubble {
+    background: var(--bt-dark-surface);
+    border: 1px solid var(--bt-border);
+    border-bottom-left-radius: 4px;
+  }
+  .bt-msg.user .bt-msg-bubble {
+    background: linear-gradient(135deg, var(--bt-primary), var(--bt-primary-dark));
+    color: #fff;
+    border-bottom-right-radius: 4px;
+  }
+  .bt-msg-bubble strong { color: #fff; font-weight: 600; }
+
+  /* ── QUICK REPLIES ── */
+  .bt-quick-replies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+    animation: bt-msg-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .bt-qr-btn {
+    padding: 9px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(232,80,28,0.3);
+    background: rgba(232,80,28,0.08);
+    color: var(--bt-primary-light);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s;
+    white-space: nowrap;
+  }
+  .bt-qr-btn:hover {
+    background: rgba(232,80,28,0.18);
+    border-color: rgba(232,80,28,0.5);
+    transform: translateY(-1px);
+  }
+
+  /* ── TYPING INDICATOR ── */
+  .bt-typing {
+    display: flex;
+    gap: 10px;
+    align-self: flex-start;
+    max-width: 88%;
+    animation: bt-msg-in 0.3s ease;
+  }
+  .bt-typing-dots {
+    display: flex;
+    gap: 4px;
+    padding: 14px 18px;
+    background: var(--bt-dark-surface);
+    border: 1px solid var(--bt-border);
+    border-radius: 14px;
+    border-bottom-left-radius: 4px;
+  }
+  .bt-typing-dots span {
+    width: 7px; height: 7px;
+    background: var(--bt-text-muted);
+    border-radius: 50%;
+    animation: bt-dot 1.4s ease-in-out infinite;
+  }
+  .bt-typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .bt-typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bt-dot {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-6px); opacity: 1; }
+  }
+
+  /* ── INPUT AREA ── */
+  .bt-input-area {
+    padding: 14px 16px;
+    border-top: 1px solid var(--bt-border);
+    background: var(--bt-dark-mid);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .bt-input-area input {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--bt-border);
+    background: var(--bt-dark-surface);
+    color: var(--bt-text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .bt-input-area input::placeholder { color: var(--bt-text-muted); }
+  .bt-input-area input:focus { border-color: rgba(232,80,28,0.4); }
+
+  .bt-send-btn {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, var(--bt-primary), var(--bt-primary-dark));
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s;
+    flex-shrink: 0;
+  }
+  .bt-send-btn:hover { transform: scale(1.06); box-shadow: 0 4px 16px rgba(232,80,28,0.4); }
+  .bt-send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+  .bt-send-btn svg { width: 18px; height: 18px; fill: #fff; }
+
+  /* ── FOOTER / POWERED BY ── */
+  .bt-footer {
+    text-align: center;
+    padding: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    color: var(--bt-text-muted);
+    background: var(--bt-dark-mid);
+    border-top: 1px solid var(--bt-border);
+    opacity: 0.6;
+  }
+
+  /* ── LEAD FORM INSIDE CHAT ── */
+  .bt-lead-form {
+    background: var(--bt-dark-surface);
+    border: 1px solid var(--bt-border);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    animation: bt-msg-in 0.5s ease;
+  }
+  .bt-lead-form h4 {
+    font-family: 'Sora', sans-serif;
+    font-size: 13px;
+    color: var(--bt-primary-light);
+    margin-bottom: 2px;
+  }
+  .bt-lead-form input, .bt-lead-form textarea {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--bt-border);
+    background: var(--bt-dark);
+    color: var(--bt-text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border 0.2s;
+  }
+  .bt-lead-form input:focus, .bt-lead-form textarea:focus { border-color: rgba(232,80,28,0.4); }
+  .bt-lead-form textarea { resize: none; height: 60px; }
+  .bt-lead-submit {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--bt-primary), var(--bt-primary-dark));
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .bt-lead-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(232,80,28,0.35); }
+
+  /* ── WhatsApp CTA ── */
+  .bt-whatsapp-cta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: rgba(34,197,94,0.1);
+    border: 1px solid rgba(34,197,94,0.25);
+    cursor: pointer;
+    transition: all 0.25s;
+    margin-top: 6px;
+    text-decoration: none;
+  }
+  .bt-whatsapp-cta:hover { background: rgba(34,197,94,0.18); transform: translateY(-1px); }
+  .bt-whatsapp-cta svg { width: 22px; height: 22px; fill: #22C55E; flex-shrink: 0; }
+  .bt-whatsapp-cta span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--bt-accent-green);
+    font-weight: 500;
+  }
+
+  /* ── Service Card ── */
+  .bt-service-card {
+    background: var(--bt-dark-surface);
+    border: 1px solid var(--bt-border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-top: 6px;
+    transition: all 0.2s;
+  }
+  .bt-service-card:hover { border-color: rgba(232,80,28,0.25); }
+  .bt-service-card h5 {
+    font-family: 'Sora', sans-serif;
+    font-size: 12.5px;
+    color: var(--bt-primary-light);
+    margin-bottom: 6px;
+  }
+  .bt-service-card p {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--bt-text-muted);
+    line-height: 1.5;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 480px) {
+    .bt-chat-window {
+      bottom: 0; right: 0;
+      width: 100vw;
+      height: 100vh;
+      max-height: 100vh;
+      border-radius: 0;
+    }
+    .bt-chat-trigger { bottom: 20px; right: 20px; width: 58px; height: 58px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ TRIGGER BUTTON ═══════ -->
+<button class="bt-chat-trigger" id="btTrigger" onclick="toggleChat()">
+  <span class="bt-badge" id="btBadge"></span>
+  <svg id="btTriggerIcon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/><path d="M7 9h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg>
+</button>
+
+<!-- ═══════ CHAT WINDOW ═══════ -->
+<div class="bt-chat-window" id="btWindow">
+
+  <!-- HEADER -->
+  <div class="bt-header">
+    <div class="bt-header-top">
+      <div class="bt-logo">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 2.76 1.12 5.26 2.93 7.07L12 22l7.07-2.93A9.96 9.96 0 0022 12c0-5.52-4.48-10-10-10zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm-5.93 9.93A7.95 7.95 0 014 12c0-1.85.63-3.55 1.69-4.9L12 9l6.31-1.9A7.95 7.95 0 0120 12c0 1.85-.63 3.55-1.69 4.9L12 15l-5.93 2.93z"/></svg>
+      </div>
+      <div class="bt-header-info">
+        <h3>BoilerTech Energy</h3>
+        <span>Online — Ready to assist</span>
+      </div>
+      <button class="bt-close-btn" onclick="toggleChat()">
+        <svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- MESSAGES -->
+  <div class="bt-messages" id="btMessages"></div>
+
+  <!-- INPUT -->
+  <div class="bt-input-area">
+    <input type="text" id="btInput" placeholder="Type your message..." autocomplete="off" onkeydown="if(event.key==='Enter')sendMessage()">
+    <button class="bt-send-btn" onclick="sendMessage()">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+
+  <div class="bt-footer">⚡ Powered by BoilerTech Energy</div>
+</div>
+
+<script defer>
+// ═══════════════════════════════════════════════
+// BOILERTECH ENERGY — SMART CHATBOT ENGINE
+// ═══════════════════════════════════════════════
+
+const PHONE = '919445651070';
+const EMAIL = 'service@boilertechenergy.com';
+const SITE  = 'http://boilertechenergy.com';
+
+// ── Knowledge Base ──
+const KB = {
+  company: {
+    name: 'BoilerTech Energy',
+    tagline: 'Expert service provider for power & process boilers — AFBC, CFBC & Travelling Grate',
+    about: 'We specialize in increasing boiler performance and availability through operational fine-tuning and system modifications. Based in Erode, Tamil Nadu, we serve industries across India.',
+    address: '219A, Ramamoorthi Nagar, Erode - 638003',
+    phone: '+91-9445651070',
+    email: 'service@boilertechenergy.com',
+    website: 'boilertechenergy.com'
+  },
+  services: [
+    {
+      id: 'shutdown',
+      name: 'Shutdown Inspection of Boiler',
+      desc: 'Complete boiler inspection during shutdown — pressure parts thickness measurement, flue gas & water/steam side inspection, non-pressure parts check, and review of operating logs for performance improvement.',
+      keywords: ['shutdown', 'inspection', 'thickness', 'pressure parts', 'flue gas']
+    },
+    {
+      id: 'performance',
+      name: 'Boiler Performance Improvement',
+      desc: 'Focused on combustion efficiency improvement & auxiliary power reduction — direct/indirect efficiency calculation, air requirement analysis, gas analysis, thermography survey for insulation loss, and pump/fan efficiency measurement.',
+      keywords: ['performance', 'efficiency', 'combustion', 'thermography', 'fuel', 'improve', 'optimization']
+    },
+    {
+      id: 'troubleshoot',
+      name: 'Trouble Shooting for Boiler Problems',
+      desc: 'Expert diagnosis of tube failures, high bed temperature, heat exchanger vibration, low steam temperature, water carryover, high unburnt, low fan performance, and high auxiliary consumption — with solutions to prevent recurrence.',
+      keywords: ['trouble', 'problem', 'tube failure', 'vibration', 'steam', 'carryover', 'unburnt', 'issue', 'fix']
+    },
+    {
+      id: 'training',
+      name: 'Onsite Training for Operators',
+      desc: 'Comprehensive onsite training for boiler operators — classroom sessions using presentations plus hands-on field training to enhance operating and analytical skills.',
+      keywords: ['training', 'onsite', 'operator', 'skill', 'class', 'learn', 'teach']
+    },
+    {
+      id: 'altfuel',
+      name: 'Alternative Fuel Study',
+      desc: 'Feasibility study for switching fuels — covering auxiliary capacity (fans), pressure part heat transfer area, bed fluidization velocity, and overall system compatibility with the new fuel type.',
+      keywords: ['alternative', 'fuel', 'switch', 'coal', 'biomass', 'study']
+    },
+    {
+      id: 'petcoke',
+      name: '100% Petcoke Firing',
+      desc: 'Proven expertise in running 100% petcoke in existing boilers without major modifications — a cost-effective solution as coal prices rise and calorific value drops.',
+      keywords: ['petcoke', 'pet coke', 'petroleum', 'coke', 'firing', '100%']
+    },
+    {
+      id: 'audit',
+      name: 'Field Quality Auditing',
+      desc: 'On-site auditing to verify boiler parts and auxiliaries are erected as per design requirements — prevents performance and availability issues caused by erection deviations.',
+      keywords: ['audit', 'quality', 'erection', 'field', 'design', 'check']
+    }
+  ]
+};
+
+// ── State ──
+let chatOpen = false;
+let conversationStep = 'init'; // init, menu, service_detail, enquiry_form, free_chat
+let currentService = null;
+
+// ── SVG Icons ──
+const BOT_AVATAR = `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>`;
+const USER_AVATAR = `<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
+const WA_ICON = `<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>`;
+
+// ── Utilities ──
+function scrollBottom() {
+  const m = document.getElementById('btMessages');
+  setTimeout(() => m.scrollTop = m.scrollHeight, 50);
+}
+
+function addMessage(type, content) {
+  const m = document.getElementById('btMessages');
+  const avatar = type === 'bot' ? BOT_AVATAR : USER_AVATAR;
+  const div = document.createElement('div');
+  div.className = `bt-msg ${type}`;
+  div.innerHTML = `<div class="bt-msg-avatar">${avatar}</div><div class="bt-msg-bubble">${content}</div>`;
+  m.appendChild(div);
+  scrollBottom();
+}
+
+function addBotHTML(html) {
+  const m = document.getElementById('btMessages');
+  const div = document.createElement('div');
+  div.className = 'bt-msg bot';
+  div.innerHTML = `<div class="bt-msg-avatar">${BOT_AVATAR}</div><div style="flex:1;min-width:0">${html}</div>`;
+  m.appendChild(div);
+  scrollBottom();
+}
+
+function showTyping() {
+  const m = document.getElementById('btMessages');
+  const div = document.createElement('div');
+  div.className = 'bt-typing';
+  div.id = 'btTyping';
+  div.innerHTML = `<div class="bt-msg-avatar" style="background:linear-gradient(135deg,var(--bt-primary),var(--bt-primary-dark))">${BOT_AVATAR}</div><div class="bt-typing-dots"><span></span><span></span><span></span></div>`;
+  m.appendChild(div);
+  scrollBottom();
+}
+
+function hideTyping() {
+  const t = document.getElementById('btTyping');
+  if (t) t.remove();
+}
+
+function addQuickReplies(options) {
+  const m = document.getElementById('btMessages');
+  const div = document.createElement('div');
+  div.className = 'bt-quick-replies';
+  div.id = 'btQR';
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'bt-qr-btn';
+    btn.textContent = opt.label;
+    btn.onclick = () => {
+      const qr = document.getElementById('btQR');
+      if (qr) qr.remove();
+      handleQuickReply(opt);
+    };
+    div.appendChild(btn);
+  });
+  m.appendChild(div);
+  scrollBottom();
+}
+
+function botReply(text, delay = 800) {
+  showTyping();
+  return new Promise(resolve => {
+    setTimeout(() => {
+      hideTyping();
+      addMessage('bot', text);
+      resolve();
+    }, delay);
+  });
+}
+
+function botReplyHTML(html, delay = 800) {
+  showTyping();
+  return new Promise(resolve => {
+    setTimeout(() => {
+      hideTyping();
+      addBotHTML(html);
+      resolve();
+    }, delay);
+  });
+}
+
+// ── Toggle Chat ──
+/* ALL your chatbot JS here */
+window.toggleChat = function() {
+  chatOpen = !chatOpen;
+
+  document.getElementById('btWindow').classList.toggle('open', chatOpen);
+  document.getElementById('btTrigger').classList.toggle('active', chatOpen);
+
+  const badge = document.getElementById('btBadge');
+  if (chatOpen && badge) badge.style.display = 'none';
+};
+
+// ── Start ──
+async function startConversation() {
+  conversationStep = 'menu';
+  await botReply(`👋 Welcome to <strong>BoilerTech Energy!</strong><br><br>We are expert service providers for <strong>AFBC, CFBC & Travelling Grate</strong> boilers — boosting performance, availability & efficiency.`, 600);
+  await botReply(`How can I help you today? Choose an option below or type your question:`, 500);
+  showMainMenu();
+}
+
+function showMainMenu() {
+  conversationStep = 'menu';
+  addQuickReplies([
+    { label: '🔧 Our Services', action: 'services' },
+    { label: '📋 Get a Quote', action: 'enquiry' },
+    { label: '📞 Contact Us', action: 'contact' },
+    { label: '🏢 About Us', action: 'about' }
+  ]);
+}
+
+// ── Quick Reply Handler ──
+async function handleQuickReply(opt) {
+  addMessage('user', opt.label);
+
+  if (opt.action === 'services') {
+    await botReply('Here are our expert boiler services:', 600);
+    showServiceCards();
+  }
+  else if (opt.action === 'enquiry') {
+    await botReply('We\'d love to hear about your requirements! Please fill in your details:', 600);
+    showLeadForm();
+  }
+  else if (opt.action === 'contact') {
+    await showContactInfo();
+  }
+  else if (opt.action === 'about') {
+    await botReply(`<strong>BoilerTech Energy</strong> is a specialized service provider for power & process boilers.<br><br>We increase boiler <strong>performance & availability</strong> through operational fine-tuning, system modifications, and expert consultancy.<br><br>📍 Based in <strong>Erode, Tamil Nadu</strong>, we serve industries across India.`, 700);
+    await botReply('Would you like to know more?', 400);
+    showMainMenu();
+  }
+  else if (opt.action === 'service_detail') {
+    const svc = KB.services.find(s => s.id === opt.serviceId);
+    if (svc) {
+      currentService = svc;
+      conversationStep = 'service_detail';
+      let html = `<div class="bt-service-card"><h5>🔧 ${svc.name}</h5><p>${svc.desc}</p></div>`;
+      await botReplyHTML(html, 700);
+      await botReply('Would you like to get a quote for this service or explore other options?', 400);
+      addQuickReplies([
+        { label: '📋 Get Quote', action: 'enquiry' },
+        { label: '💬 WhatsApp Us', action: 'whatsapp' },
+        { label: '◀ Back to Menu', action: 'back_menu' }
+      ]);
+    }
+  }
+  else if (opt.action === 'whatsapp') {
+    const msg = currentService
+      ? `Hi, I'm interested in your "${currentService.name}" service. Please share more details.`
+      : `Hi, I visited your website and would like to know more about your boiler services.`;
+    const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
+    let html = `<a class="bt-whatsapp-cta" href="${url}" target="_blank">${WA_ICON}<span>Chat with us on WhatsApp →</span></a>`;
+    await botReplyHTML(html, 500);
+    await botReply('Is there anything else I can help with?', 600);
+    showMainMenu();
+  }
+  else if (opt.action === 'back_menu') {
+    currentService = null;
+    await botReply('Sure! What else would you like to know?', 400);
+    showMainMenu();
+  }
+}
+
+// ── Service Cards ──
+function showServiceCards() {
+  const m = document.getElementById('btMessages');
+  KB.services.forEach((svc, i) => {
+    setTimeout(() => {
+      const div = document.createElement('div');
+      div.className = 'bt-msg bot';
+      div.innerHTML = `
+        <div style="flex:1;min-width:0;margin-left:40px">
+          <div class="bt-service-card" style="cursor:pointer" onclick="selectService('${svc.id}')">
+            <h5>${svc.name}</h5>
+            <p>${svc.desc.substring(0, 90)}...</p>
+          </div>
+        </div>`;
+      m.appendChild(div);
+      scrollBottom();
+    }, i * 200);
+  });
+
+  setTimeout(() => {
+    addQuickReplies([
+      { label: '📋 Get a Quote', action: 'enquiry' },
+      { label: '💬 WhatsApp Us', action: 'whatsapp' },
+      { label: '◀ Back', action: 'back_menu' }
+    ]);
+  }, KB.services.length * 200 + 300);
+}
+
+function selectService(id) {
+  handleQuickReply({ label: KB.services.find(s => s.id === id).name, action: 'service_detail', serviceId: id });
+}
+
+// ── Contact Info ──
+async function showContactInfo() {
+  let html = `
+    <div class="bt-msg-bubble" style="background:var(--bt-dark-surface);border:1px solid var(--bt-border);border-bottom-left-radius:4px;">
+      <strong>📍 Address</strong><br>219A, Ramamoorthi Nagar, Erode - 638003<br><br>
+      <strong>📞 Phone</strong><br><a href="tel:+919445651070" style="color:var(--bt-primary-light);text-decoration:none">+91-9445651070</a><br><br>
+      <strong>✉️ Email</strong><br><a href="mailto:${EMAIL}" style="color:var(--bt-primary-light);text-decoration:none">${EMAIL}</a>
+    </div>
+    <a class="bt-whatsapp-cta" href="https://wa.me/${PHONE}?text=${encodeURIComponent('Hi, I visited your website and need boiler services.')}" target="_blank">${WA_ICON}<span>Quick chat on WhatsApp →</span></a>`;
+  await botReplyHTML(html, 600);
+  await botReply('Anything else I can help with?', 500);
+  showMainMenu();
+}
+
+// ── Lead Form ──
+function showLeadForm() {
+  conversationStep = 'enquiry_form';
+  const m = document.getElementById('btMessages');
+  const div = document.createElement('div');
+  div.className = 'bt-msg bot';
+  div.innerHTML = `
+    <div class="bt-msg-avatar">${BOT_AVATAR}</div>
+    <div style="flex:1;min-width:0">
+      <div class="bt-lead-form" id="btLeadForm">
+        <h4>📋 Enquiry Form</h4>
+        <input type="text" id="leadName" placeholder="Your Name *">
+        <input type="text" id="leadPhone" placeholder="Phone Number *">
+        <input type="email" id="leadEmail" placeholder="Email Address">
+        <input type="text" id="leadCompany" placeholder="Company / Plant Name">
+        <textarea id="leadMsg" placeholder="Brief requirement (boiler type, issue, etc.)"></textarea>
+        <button class="bt-lead-submit" onclick="submitLead()">Submit Enquiry →</button>
+      </div>
+    </div>`;
+  m.appendChild(div);
+  scrollBottom();
+}
+
+async function submitLead() {
+  const name = document.getElementById('leadName').value.trim();
+  const phone = document.getElementById('leadPhone').value.trim();
+  const email = document.getElementById('leadEmail').value.trim();
+  const company = document.getElementById('leadCompany').value.trim();
+  const msg = document.getElementById('leadMsg').value.trim();
+
+  if (!name || !phone) {
+    alert('Please enter your name and phone number.');
+    return;
+  }
+
+  // Remove form
+  const form = document.getElementById('btLeadForm');
+  if (form) form.innerHTML = '<p style="color:var(--bt-accent-green);font-family:DM Sans;font-size:13px;padding:16px;text-align:center">✅ Enquiry submitted successfully!</p>';
+
+  conversationStep = 'menu';
+
+  // Log to console (replace with your webhook/API)
+  const leadData = { name, phone, email, company, message: msg, service: currentService?.name || 'General', timestamp: new Date().toISOString() };
+  console.log('📩 NEW LEAD:', leadData);
+
+  // ── WEBHOOK INTEGRATION ──
+  // Uncomment and replace URL with your Google Apps Script / webhook URL:
+  // try {
+  //   await fetch('YOUR_WEBHOOK_URL', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify(leadData)
+  //   });
+  // } catch(e) { console.error('Webhook error:', e); }
+
+  await botReply(`Thank you, <strong>${name}</strong>! 🙏<br><br>Our team will reach out to you shortly at <strong>${phone}</strong>.<br><br>For immediate assistance, you can also reach us directly:`, 700);
+
+  const waMsg = `Hi, I'm ${name}${company ? ' from ' + company : ''}. ${msg || 'I need boiler services. Please contact me.'}`;
+  let html = `<a class="bt-whatsapp-cta" href="https://wa.me/${PHONE}?text=${encodeURIComponent(waMsg)}" target="_blank">${WA_ICON}<span>Continue on WhatsApp for faster response →</span></a>`;
+  await botReplyHTML(html, 400);
+  await botReply('Is there anything else I can help with?', 500);
+  showMainMenu();
+}
+
+// ── Free Text Handler ──
+function sendMessage() {
+  const input = document.getElementById('btInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  input.value = '';
+  addMessage('user', text);
+
+  // Remove any existing quick replies
+  const qr = document.getElementById('btQR');
+  if (qr) qr.remove();
+
+  processUserMessage(text);
+}
+
+async function processUserMessage(text) {
+  const lower = text.toLowerCase();
+
+  // ── Intent Detection ──
+  if (/\b(service|services|what do you do|what you offer|offerings)\b/i.test(lower)) {
+    await botReply('Here are our expert boiler services:', 600);
+    showServiceCards();
+    return;
+  }
+
+  if (/\b(quote|enquiry|enquire|pricing|cost|price|rate|charge)\b/i.test(lower)) {
+    await botReply('Great! Let me get your details for a quote:', 500);
+    showLeadForm();
+    return;
+  }
+
+  if (/\b(contact|phone|call|email|address|location|reach|office)\b/i.test(lower)) {
+    await showContactInfo();
+    return;
+  }
+
+  if (/\b(whatsapp|wa|chat|message)\b/i.test(lower)) {
+    handleQuickReply({ label: 'WhatsApp', action: 'whatsapp' });
+    return;
+  }
+
+  if (/\b(about|who are you|company|boilertech|introduction)\b/i.test(lower)) {
+    handleQuickReply({ label: 'About Us', action: 'about' });
+    return;
+  }
+
+  if (/\b(hi|hello|hey|good morning|good evening|vanakkam|namaste)\b/i.test(lower)) {
+    await botReply(`Hello! 👋 Welcome to BoilerTech Energy. How can I assist you today?`, 500);
+    showMainMenu();
+    return;
+  }
+
+  if (/\b(thank|thanks|thankyou|ok|okay|great|perfect|good|nice)\b/i.test(lower)) {
+    await botReply(`You're welcome! 😊 Feel free to reach out anytime. Is there anything else?`, 500);
+    showMainMenu();
+    return;
+  }
+
+  // ── Service Matching ──
+  const matched = KB.services.filter(svc =>
+    svc.keywords.some(kw => lower.includes(kw))
+  );
+
+  if (matched.length === 1) {
+    handleQuickReply({ label: matched[0].name, action: 'service_detail', serviceId: matched[0].id });
+    return;
+  }
+
+  if (matched.length > 1) {
+    await botReply(`I found ${matched.length} relevant services for you:`, 500);
+    matched.forEach(svc => {
+      setTimeout(() => {
+        const m = document.getElementById('btMessages');
+        const div = document.createElement('div');
+        div.className = 'bt-msg bot';
+        div.innerHTML = `<div style="flex:1;min-width:0;margin-left:40px"><div class="bt-service-card" style="cursor:pointer" onclick="selectService('${svc.id}')"><h5>${svc.name}</h5><p>${svc.desc.substring(0, 90)}...</p></div></div>`;
+        m.appendChild(div);
+        scrollBottom();
+      }, 200);
+    });
+    return;
+  }
+
+  // ── Fallback ──
+  await botReply(`Thanks for your message! For specific queries, our team can assist you better. Would you like to connect with us?`, 700);
+  addQuickReplies([
+    { label: '📋 Submit Enquiry', action: 'enquiry' },
+    { label: '💬 WhatsApp Us', action: 'whatsapp' },
+    { label: '📞 Call Now', action: 'contact' },
+    { label: '◀ Main Menu', action: 'back_menu' }
+  ]);
+}
+
+// ── Auto-show badge after 3 seconds ──
+setTimeout(() => {
+  const badge = document.getElementById('btBadge');
+  if (badge && !chatOpen) badge.style.display = 'block';
+}, 3000);
+</script>
+</body>
+</html>

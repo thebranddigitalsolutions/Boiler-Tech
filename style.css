@@ -1,0 +1,366 @@
+/* ===== BRAND COLORS ===== */
+:root{
+    --bt-blue:#0ea5e9;
+    --bt-orange:#f97316;
+    --bt-green:#22c55e;
+  }
+  
+  /* ===== GLOBAL ANIMATION ===== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease;
+  }
+  .fade-in.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* ===== HOVER EFFECT ===== */
+  .hover-lift {
+    transition: all 0.4s ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-10px) scale(1.02);
+  }
+  
+  /* ===== TOP GRADIENT ===== */
+  .animated-gradient {
+    background: linear-gradient(270deg, #1FB6D5, #F5A200, #7CFC00);
+    background-size: 600% 600%;
+    animation: gradientMove 8s ease infinite;
+  }
+  @keyframes gradientMove {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+  }
+  
+  /* ===== IMAGE ZOOM ===== */
+  .img-zoom {
+    transition: transform 0.7s ease;
+  }
+  .group:hover .img-zoom {
+    transform: scale(1.1);
+  }
+  
+  
+  /* ========================= */
+  /* ===== SERVICES (3D) ===== */
+  /* ========================= */
+  
+/* ===== SERVICE SECTION UPGRADE ===== */
+
+.perspective {
+    perspective: 1400px;
+  }
+  
+  /* 🔥 NEW GLASS CARD */
+  .glass-3d {
+    background: linear-gradient(145deg, rgba(28,32,38,0.9), rgba(10,10,10,0.95));
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(18px);
+    padding: 32px;
+    border-radius: 18px;
+    transform-style: preserve-3d;
+    transition: all 0.4s ease;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.7);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* 🔥 TOP GLOW LINE */
+  .glass-3d::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: linear-gradient(90deg, #1FB6D5, #F5A200, #7CFC00);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: 0.4s;
+  }
+  
+  /* 🔥 TEXT STRONG */
+  .glass-3d h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #1FB6D5, #F5A200);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .glass-3d p {
+    font-size: 14px;
+    color: #cbd5e1; /* brighter text */
+    line-height: 1.6;
+  }
+  
+  /* 🔥 HOVER PREMIUM EFFECT */
+  .glass-3d:hover {
+    transform: rotateX(8deg) rotateY(-8deg) scale(1.05);
+    box-shadow: 0 30px 90px rgba(31,182,213,0.25);
+  }
+  
+  /* glow activate */
+  .glass-3d:hover::before {
+    transform: scaleX(1);
+  }
+  
+  /* 🔥 MOUSE TILT */
+  .tilt {
+    will-change: transform;
+  }
+  
+  /* ===== REMOVE DUPLICATE FADE ===== */
+  /* keep only ONE fade */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease;
+  }
+  .fade-in.show {
+    opacity: 1;
+    transform: translateY(0);
+  }  
+  /* ========================= */
+  /* ===== PRODUCTS CAROUSEL ===== */
+  /* ========================= */
+  
+  .carousel-track{
+    display:flex;
+    animation: scroll 25s linear infinite;
+  }
+  
+  .carousel-track:hover{
+    animation-play-state: paused;
+  }
+  
+  @keyframes scroll{
+    0%{transform:translateX(0)}
+    100%{transform:translateX(-50%)}
+  }
+  
+  .product-card{
+    min-width:220px;
+    padding:22px;
+    border-radius:16px;
+    background:#111;
+    color:white;
+    font-weight:600;
+    text-align:center;
+    transition:0.4s;
+    border:1px solid rgba(255,255,255,0.08);
+    position:relative;
+    overflow:hidden;
+  }
+  
+  .product-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:16px;
+    padding:1px;
+    background:linear-gradient(120deg,var(--bt-blue),var(--bt-orange),var(--bt-green));
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    opacity:0;
+    transition:0.4s;
+  }
+  
+  .product-card:hover{
+    transform:translateY(-10px) scale(1.05);
+    box-shadow:0 15px 40px rgba(0,0,0,0.8);
+    color:var(--bt-orange);
+    background:linear-gradient(135deg,#111,#1a1a1a);
+  }
+  
+  .product-card:hover::before{
+    opacity:1;
+  }
+  
+  .section-title{
+    background:linear-gradient(90deg,var(--bt-blue),var(--bt-orange));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  
+  
+  /* ========================= */
+  /* ===== TARGET INDUSTRY ===== */
+  /* ========================= */
+  
+  .industry-card {
+    background: #ffffff;
+    padding: 30px 20px;
+    border-radius: 16px;
+    text-align: center;
+    border: 1px solid #eee;
+    transition: all 0.4s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .industry-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--bt-blue), var(--bt-orange));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  
+  .industry-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  }
+  
+  .industry-card:hover::before {
+    transform: scaleX(1);
+  }
+  
+  .industry-card .icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+    transition: transform 0.4s ease;
+  }
+  
+  .industry-card:hover .icon {
+    transform: scale(1.2) rotate(5deg);
+  }
+  
+  .industry-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 8px;
+  }
+  
+  .industry-card p {
+    font-size: 13px;
+    color: #666;
+  }
+  
+  #target{
+    margin-top: 5vh;
+  }
+  /* smoot animation  */
+  /* ===== GLOBAL ===== */
+body {
+    font-family: sans-serif;
+    }
+    
+    /* ===== FLOATING BG ===== */
+    .floating-bg {
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(59,130,246,0.2), transparent);
+    top: 20%;
+    left: 10%;
+    filter: blur(100px);
+    animation: float 10s infinite alternate;
+    z-index: -1;
+    }
+    
+    @keyframes float {
+    from { transform: translateY(0); }
+    to { transform: translateY(80px); }
+    }
+    
+    /* ===== NAV LINK ===== */
+    .nav-link {
+    position: relative;
+    cursor: pointer;
+    }
+    
+    .nav-link::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background: #3b82f6;
+    left: 0;
+    bottom: -4px;
+    transition: 0.4s;
+    }
+    
+    .nav-link:hover::after {
+    width: 100%;
+    }
+    
+    /* ===== BUTTON ===== */
+    .btn-premium {
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s;
+    }
+    
+    .btn-premium::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 120%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: 0.6s;
+    }
+    
+    .btn-premium:hover::before {
+    left: 100%;
+    }
+    
+    .btn-premium:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    
+    button:active {
+    transform: scale(0.95);
+    }
+    
+    /* ===== CARD ===== */
+    .card-premium {
+    transition: 0.4s;
+    }
+    
+    .card-premium:hover {
+    transform: rotateX(6deg) rotateY(-6deg) scale(1.05);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    
+    /* ===== FADE ===== */
+    .fade-in {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 0.8s;
+    }
+    
+    .fade-in.show {
+    opacity: 1;
+    transform: translateY(0);
+    }
+    
+    /* ===== TEXT REVEAL ===== */
+    .text-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(6px);
+    transition: 0.8s;
+    }
+    
+    .text-reveal.show {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+    }
