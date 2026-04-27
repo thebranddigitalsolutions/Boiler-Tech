@@ -4,410 +4,774 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>About - Lorem Tech</title>
+<title>About - Boilertech Energy Services</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-<style>
-.reveal { opacity:0; transform:translateY(40px); transition:all 0.8s ease; }
-.reveal.show { opacity:1; transform:translateY(0); }
 
-.timeline-line {
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  width:2px;
-  background:#e2e8f0;
-  height:100%;
-}
+<style>
+  :root {
+    --blue:   #1CB5D8;
+    --orange: #FFA500;
+    --green:  #7CFC00;
+    --red:    #e02424;
+    --dark:   #383839;
+  }
+
+  * { font-family: 'Inter', sans-serif; }
+  .font-manrope { font-family: 'Manrope', sans-serif; }
+
+  h1,h2,h3,h4 { color:#0a0a0a; font-family:'Manrope',sans-serif; }
+  .dark-section h1,.dark-section h2,.dark-section h3,.dark-section h4 { color:#fff; }
+  .accent { color:#1CB5D8; }
+
+  /* reveal */
+  .reveal { opacity:0; transform:translateY(28px); transition:all 0.65s ease; }
+  .reveal.show { opacity:1; transform:translateY(0); }
+
+  /* counter pulse */
+  @keyframes pulseNum {
+    0%,100% { transform:scale(1); }
+    50%      { transform:scale(1.06); }
+  }
+  .pulse-num { animation: pulseNum 3s ease-in-out infinite; }
+
+  /* gradient text */
+  .grad-blue  { background:linear-gradient(135deg,#1CB5D8,#0d8fac); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .grad-fire  { background:linear-gradient(135deg,#FFA500,#e02424); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .grad-green { background:linear-gradient(135deg,#7CFC00,#3db800); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+
+  /* stat bar fill */
+  .bar-fill { animation: barGrow 1.4s ease forwards; }
+  @keyframes barGrow { from { width:0 } }
+
+  /* mobile timeline */
+  @media (max-width:767px) {
+    .tl-card-left,.tl-card-right { width:100% !important; margin-left:36px !important; text-align:left !important; }
+    .tl-dot { left:5px !important; }
+  }
+
+  /* glow blobs */
+  .blob-blue   { background:radial-gradient(circle,rgba(28,181,216,.18),transparent 70%); }
+  .blob-orange { background:radial-gradient(circle,rgba(255,165,0,.15),transparent 70%); }
+  .blob-green  { background:radial-gradient(circle,rgba(124,252,0,.13),transparent 70%); }
+
+  /* industry card hover */
+  .ind-card { transition:transform .3s,box-shadow .3s; }
+  .ind-card:hover { transform:translateY(-6px); box-shadow:0 20px 40px rgba(28,181,216,.15); }
+
+  /* team card */
+  .team-card { transition:transform .3s,box-shadow .3s; }
+  .team-card:hover { transform:translateY(-5px); box-shadow:0 16px 32px rgba(0,0,0,.1); }
+
+  /* number counter */
+  .big-num { font-size:clamp(2.5rem,6vw,4.5rem); font-weight:900; font-family:'Manrope',sans-serif; }
+
+  
 </style>
 </head>
 
-<body class="bg-[#F8FAFC] text-slate-900 font-inter">
+<body class="bg-[#F8FAFC] text-slate-800">
 
-<!-- NAV -->
-<!-- NAV (FULL RESPONSIVE PREMIUM) -->
-<nav class="fixed top-0 w-full z-50 bg-white/100 backdrop-blur border-b border-slate-200">
-
-  <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
-
-    <!-- LOGO -->
-    <div class="flex items-center gap-3">
-      <img src="Logo.png" alt="Logo" class="h-10 w-auto" />
-      <div class="text-black font-black text-xl">
-        Lorem <span class="text-[#1CB5D8]">Tech</span>
+<!-- ══ NAV ══ -->
+<nav class="fixed top-0 w-full z-50 bg-white border-b border-slate-200">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 py-4">
+    <div class="flex items-center gap-2.5">
+      <img src="Logo.png" alt="Boilertech Energy Services Logo" class="h-9 w-auto"/>
+      <div class="text-black font-black text-xl font-manrope tracking-tight">
+        Boiler<span class="text-[#1CB5D8]">Tech</span>
       </div>
     </div>
-
-    <!-- DESKTOP LINKS -->
-    <div class="hidden md:flex items-center gap-8 text-sm font-medium">
-      <a href="index.html" class="text-slate-700 hover:text-[#1CB5D8] transition">Home</a>
-      <a href="about.html" class="text-[#1CB5D8] border-b-2 border-[#1CB5D8] pb-1">About</a>
-      <a href="services.html" class="text-slate-700 hover:text-[#1CB5D8] transition">Services</a>
-      <a href="products.html" class="text-slate-700 hover:text-[#1CB5D8] transition">Products</a>
-      <a href="contact.html" class="text-slate-700 hover:text-[#1CB5D8] transition">Contact</a>
+    <div class="hidden md:flex items-center gap-7 text-sm font-medium">
+      <a href="index.html"    class="text-slate-600 hover:text-[#1CB5D8] transition">Home</a>
+      <a href="about.html"    class="text-[#1CB5D8] border-b-2 border-[#1CB5D8] pb-0.5">About</a>
+      <a href="services.html" class="text-slate-600 hover:text-[#1CB5D8] transition">Services</a>
+      <a href="products.html" class="text-slate-600 hover:text-[#1CB5D8] transition">Products</a>
+      <a href="contact.html"  class="text-slate-600 hover:text-[#1CB5D8] transition">Contact</a>
     </div>
-
-    <!-- CTA (DESKTOP) -->
     <div class="hidden md:block">
-      <button class="bg-[#FFA500] text-white px-5 py-2 rounded-full hover:scale-105 transition shadow-md">
-        Get Quote
-      </button>
+      <a href="contact.html">
+        <button class="bg-[#FFA500] text-white text-sm px-5 py-2 rounded-full hover:scale-105 transition shadow font-semibold">Get Quote</button>
+      </a>
     </div>
-
-    <!-- MOBILE BUTTON -->
-    <button id="menuBtn" class="md:hidden flex flex-col gap-1.5">
-      <span class="w-6 h-0.5 bg-black"></span>
-      <span class="w-6 h-0.5 bg-black"></span>
-      <span class="w-6 h-0.5 bg-black"></span>
+    <button id="menuBtn" class="md:hidden flex flex-col gap-[5px] p-1">
+      <span class="w-6 h-0.5 bg-black block"></span>
+      <span class="w-6 h-0.5 bg-black block"></span>
+      <span class="w-6 h-0.5 bg-black block"></span>
     </button>
-
   </div>
-
-  <!-- MOBILE MENU -->
-  <!-- MOBILE MENU -->
-<div id="mobileMenu"
-  class="md:hidden bg-white border-t border-slate-200 overflow-hidden max-h-0 transition-all duration-500 ease-in-out">
-
-  <div class="flex flex-col px-6 py-4 gap-4 text-sm font-medium">
-
-    <a href="index.html" class="text-slate-700 hover:text-[#1CB5D8]">Home</a>
-    <a href="about.html" class="text-[#1CB5D8] font-bold">About</a>
-    <a href="services.html" class="text-slate-700 hover:text-[#1CB5D8]">Services</a>
-    <a href="products.html" class="text-slate-700 hover:text-[#1CB5D8]">Products</a>
-    <a href="contact.html" class="text-slate-700 hover:text-[#1CB5D8]">Contact</a>
-
-    <button class="mt-2 bg-[#FFA500] text-white px-5 py-2 rounded-full w-full">
-      Get Quote
-    </button>
-
+  <div id="mobileMenu" class="md:hidden bg-white border-t border-slate-100 overflow-hidden max-h-0 transition-all duration-500">
+    <div class="flex flex-col px-6 py-5 gap-4 text-sm font-medium">
+      <a href="index.html"    class="text-slate-600 hover:text-[#1CB5D8]">Home</a>
+      <a href="about.html"    class="text-[#1CB5D8] font-bold">About</a>
+      <a href="services.html" class="text-slate-600 hover:text-[#1CB5D8]">Services</a>
+      <a href="products.html" class="text-slate-600 hover:text-[#1CB5D8]">Products</a>
+      <a href="contact.html"  class="text-slate-600 hover:text-[#1CB5D8]">Contact</a>
+      <button class="bg-[#FFA500] text-white px-5 py-2.5 rounded-full w-full font-semibold">Get Quote</button>
+    </div>
   </div>
-</div>
-
 </nav>
 
-<!-- HERO (DIFFERENT STYLE) -->
-<section class="pt-32 pb-20 bg-white">
-  <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
 
+<!-- ══ HERO ══ -->
+<section class="pt-28 pb-16 bg-white relative overflow-hidden">
+  <!-- background blobs -->
+  <div class="absolute top-0 left-0 w-[500px] h-[500px] blob-blue opacity-60 pointer-events-none"></div>
+  <div class="absolute bottom-0 right-0 w-[400px] h-[400px] blob-orange opacity-50 pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center relative">
     <div class="reveal">
-      <h1 class="text-5xl lg:text-6xl font-black leading-tight">
-        Building the <span class="text-[#1CB5D8]">Future</span><br>
-        of Industrial Energy
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1CB5D8]/10 border border-[#1CB5D8]/25 text-[#1CB5D8] text-xs font-semibold mb-5">
+        <span class="w-1.5 h-1.5 bg-[#1CB5D8] rounded-full animate-pulse"></span>
+        Your Trusted Performance Partner
+      </div>
+      <h1 class="text-4xl sm:text-5xl lg:text-[54px] font-black leading-[1.1] tracking-tight">
+        Building the <span class="accent">Future</span><br>of Industrial Energy
       </h1>
-      <p class="mt-6 text-slate-600 text-lg">
-        We combine engineering precision with innovation to create high-performance systems trusted worldwide.
+      <p class="mt-5 text-slate-500 text-base leading-relaxed max-w-lg">
+        We specialize in optimizing the performance and enhancing the availability of industrial boiler systems — delivering engineering precision, operational reliability, and long-term sustainability.
       </p>
-    </div>
-
-    <!-- STAT CARD -->
-    <div class="bg-[#0B1220] text-white p-10 rounded-3xl shadow-xl reveal">
-      <h3 class="text-3xl font-bold mb-6">10+ Years</h3>
-      <p class="text-slate-300 mb-4">Delivering industrial excellence</p>
-
-      <div class="space-y-4 mt-6">
-        <div class="flex justify-between">
-          <span>Projects</span>
-          <span class="text-[#1CB5D8] font-bold">500+</span>
-        </div>
-        <div class="flex justify-between">
-          <span>Efficiency</span>
-          <span class="text-[#7CFC00] font-bold">98%</span>
-        </div>
+      <div class="mt-7 flex flex-wrap gap-3">
+        <a href="services.html">
+          <button class="px-6 py-2.5 rounded-full bg-[#1CB5D8] text-white text-sm font-semibold hover:scale-105 transition shadow-md">Our Services</button>
+        </a>
+        <a href="contact.html">
+          <button class="px-6 py-2.5 rounded-full border border-slate-200 text-slate-700 text-sm font-semibold hover:bg-slate-50 transition">Contact Us</button>
+        </a>
       </div>
     </div>
 
+    <div class="bg-[#0B1220] text-white p-8 sm:p-10 rounded-3xl shadow-xl reveal relative overflow-hidden">
+      <!-- subtle orange glow -->
+      <div class="absolute top-0 right-0 w-40 h-40 bg-[#FFA500]/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute bottom-0 left-0 w-32 h-32 bg-[#1CB5D8]/10 rounded-full blur-3xl pointer-events-none"></div>
+      <h3 class="text-3xl font-black mb-1 text-white">10+ Years</h3>
+      <p class="text-slate-400 text-sm mb-7">Delivering industrial boiler excellence across India and beyond</p>
+      <div class="space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+          <span class="text-slate-300 text-sm">Projects Completed</span>
+          <span class="text-[#1CB5D8] font-bold text-lg pulse-num">500+</span>
+        </div>
+        <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+          <span class="text-slate-300 text-sm">System Efficiency Achieved</span>
+          <span class="text-[#7CFC00] font-bold text-lg pulse-num">98%</span>
+        </div>
+        <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+          <span class="text-slate-300 text-sm">Industries Served</span>
+          <span class="text-[#FFA500] font-bold text-lg pulse-num">7+</span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="text-slate-300 text-sm">Vision by 2030</span>
+          <span class="text-white font-bold text-sm">Pan India &amp; Beyond</span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- STORY (FULL WIDTH STRONG SECTION) -->
-<section class="py-24 bg-[#0B1220] text-white">
-  <div class="max-w-5xl mx-auto text-center px-6 reveal">
-    <h2 class="text-4xl font-black mb-6">Our Journey</h2>
-    <p class="text-slate-300 text-lg leading-relaxed">
-      Lorem Tech started as a small engineering firm with a bold vision — to redefine industrial efficiency. 
-      Today, we serve global industries with cutting-edge solutions that reduce waste, increase output, and push technological boundaries.
+
+<!-- ══ WHO WE ARE ══ -->
+<section class="py-16 sm:py-20 bg-[#0B1220] dark-section relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-0 left-1/2 w-[600px] h-[300px] bg-[#1CB5D8]/5 blur-[100px] rounded-full -translate-x-1/2"></div>
+  </div>
+  <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 reveal relative">
+    <span class="inline-block px-4 py-1 rounded-full border border-slate-700 text-slate-400 text-xs mb-4">Who We Are</span>
+    <h2 class="text-3xl sm:text-4xl font-black mb-6">Our <span class="text-[#1CB5D8]">Journey</span></h2>
+    <p class="text-slate-300 text-sm sm:text-base leading-relaxed text-justify">
+      At Boilertech Energy Services, we specialize in optimizing the performance and enhancing the availability of industrial boiler systems. Through precise fine-tuning of operational parameters and strategic system re-engineering, we ensure that our clients' boiler plants operate at peak efficiency while maintaining consistent reliability.
+    </p>
+    <p class="text-slate-400 text-sm sm:text-base leading-relaxed mt-5 text-justify">
+      Our approach is driven by a deep commitment to excellence — delivering cost-effective and energy-efficient solutions tailored to each client's needs. We prioritize safety, performance, and long-term sustainability, helping industries achieve dependable energy outcomes while minimizing operational costs.
+    </p>
+    <p class="text-slate-300 text-sm sm:text-base leading-relaxed mt-5 text-justify">
+      With a strong emphasis on innovation and quality, Boilertech Energy Services stands as a trusted partner in delivering high-performance boiler solutions that meet the highest industry standards.
     </p>
   </div>
 </section>
 
-<!-- TIMELINE (NEW SECTION) -->
-<section class="py-24 bg-white relative">
-  <div class="max-w-5xl mx-auto px-6 relative">
 
-    <div class="timeline-line"></div>
+<!-- ══ IMPACT STATS STRIP ══ -->
+<section class="py-16 bg-white relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute left-0 top-0 w-80 h-80 blob-green opacity-40"></div>
+    <div class="absolute right-0 bottom-0 w-64 h-64 blob-orange opacity-40"></div>
+  </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 reveal relative">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl sm:text-4xl font-black">Our <span class="accent">Impact</span> in Numbers</h2>
+      <p class="text-slate-500 text-sm mt-2">A decade of measurable results across Indian industry</p>
+    </div>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
 
-    <div class="space-y-16">
-
-      <div class="relative reveal">
-        <div class="bg-white p-6 rounded-xl shadow-lg w-[45%]">
-          <h4 class="font-bold">2015</h4>
-          <p class="text-slate-600">Company founded with a vision for industrial innovation.</p>
+      <div class="relative rounded-2xl overflow-hidden bg-[#0B1220] p-7 flex flex-col items-center text-center reveal">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#1CB5D8]/20 to-transparent pointer-events-none"></div>
+        <div class="big-num grad-blue relative">500+</div>
+        <div class="text-slate-300 text-sm mt-2 font-semibold">Projects Done</div>
+        <div class="mt-3 w-full h-1 bg-slate-800 rounded-full overflow-hidden">
+          <div class="h-full bg-[#1CB5D8] rounded-full bar-fill" style="width:92%"></div>
         </div>
       </div>
 
-      <div class="relative reveal text-right">
-        <div class="ml-auto bg-white p-6 rounded-xl shadow-lg w-[45%]">
-          <h4 class="font-bold">2018</h4>
-          <p class="text-slate-600">Expanded into energy optimization systems.</p>
+      <div class="relative rounded-2xl overflow-hidden bg-[#0B1220] p-7 flex flex-col items-center text-center reveal">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#FFA500]/20 to-transparent pointer-events-none"></div>
+        <div class="big-num grad-fire relative">98%</div>
+        <div class="text-slate-300 text-sm mt-2 font-semibold">Efficiency Rate</div>
+        <div class="mt-3 w-full h-1 bg-slate-800 rounded-full overflow-hidden">
+          <div class="h-full bg-[#FFA500] rounded-full bar-fill" style="width:98%"></div>
         </div>
       </div>
 
-      <div class="relative reveal">
-        <div class="bg-white p-6 rounded-xl shadow-lg w-[45%]">
-          <h4 class="font-bold">2022</h4>
-          <p class="text-slate-600">Reached 500+ successful projects globally.</p>
+      <div class="relative rounded-2xl overflow-hidden bg-[#0B1220] p-7 flex flex-col items-center text-center reveal">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#7CFC00]/15 to-transparent pointer-events-none"></div>
+        <div class="big-num grad-green relative">7+</div>
+        <div class="text-slate-300 text-sm mt-2 font-semibold">Industries Served</div>
+        <div class="mt-3 w-full h-1 bg-slate-800 rounded-full overflow-hidden">
+          <div class="h-full bg-[#7CFC00] rounded-full bar-fill" style="width:70%"></div>
+        </div>
+      </div>
+
+      <div class="relative rounded-2xl overflow-hidden bg-[#0B1220] p-7 flex flex-col items-center text-center reveal">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#e02424]/15 to-transparent pointer-events-none"></div>
+        <div class="big-num text-[#e02424] relative" style="-webkit-text-fill-color:#e02424">10+</div>
+        <div class="text-slate-300 text-sm mt-2 font-semibold">Years Experience</div>
+        <div class="mt-3 w-full h-1 bg-slate-800 rounded-full overflow-hidden">
+          <div class="h-full bg-[#e02424] rounded-full bar-fill" style="width:80%"></div>
         </div>
       </div>
 
     </div>
-
   </div>
 </section>
 
-<!-- VALUES (ADVANCED IMMERSIVE SECTION) -->
-<section class="relative py-28 bg-white overflow-hidden">
 
-  <!-- background energy layers -->
+<!-- ══ MISSION / VISION / VALUES ══ -->
+<section class="py-16 sm:py-20 bg-[#F8FAFC]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-10 reveal">
+      <h2 class="text-3xl sm:text-4xl font-black">What <span class="accent">Guides</span> Us</h2>
+      <p class="text-slate-500 text-sm mt-2">The principles behind every system we design and every solution we deliver</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <!-- Mission -->
+      <div class="relative rounded-2xl overflow-hidden reveal">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#0B1220] to-[#172035]"></div>
+        <div class="absolute top-0 right-0 w-28 h-28 bg-[#1CB5D8]/15 rounded-full -translate-y-6 translate-x-6 blur-2xl"></div>
+        <div class="relative p-7 h-full flex flex-col">
+          <div class="w-10 h-10 rounded-xl bg-[#1CB5D8]/20 flex items-center justify-center text-xl mb-4">🎯</div>
+          <h3 class="text-lg font-black mb-3 text-[#1CB5D8]">Mission</h3>
+          <p class="text-slate-300 text-sm leading-relaxed flex-1">
+            To design, manufacture, and deliver efficient, reliable, and innovative industrial boiler solutions through advanced engineering, skilled execution, and an unwavering commitment to safety, performance, and sustainability — empowering industries with energy systems that drive productivity and long-term value.
+          </p>
+        </div>
+      </div>
+
+      <!-- Vision -->
+      <div class="relative rounded-2xl overflow-hidden reveal">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#FFA500] to-[#e06a00]"></div>
+        <div class="relative p-7 h-full flex flex-col">
+          <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl mb-4">🔭</div>
+          <h3 class="text-lg font-black mb-3 text-white">Vision 2030</h3>
+          <p class="text-white/90 text-sm leading-relaxed flex-1">
+            By 2030, Boilertech Energy Services aims to lead the industrial boiler segment in India and beyond — shaping the future of steam generation through the seamless integration of advanced technology and skilled engineering.
+          </p>
+          <div class="mt-5 text-white/60 text-xs font-semibold">India's Boiler Leader by 2030</div>
+        </div>
+      </div>
+
+      <!-- Core Values -->
+      <div class="p-7 rounded-2xl bg-white border border-slate-100 shadow-sm reveal sm:col-span-2 lg:col-span-1">
+        <div class="w-10 h-10 rounded-xl bg-[#7CFC00]/15 flex items-center justify-center text-xl mb-4">⚙️</div>
+        <h3 class="text-lg font-black mb-4">Core Values</h3>
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-start gap-2">
+            <span class="text-[#1CB5D8] font-bold mt-0.5 shrink-0">▸</span>
+            <span><strong class="text-slate-900">Engineering Precision</strong> <span class="text-slate-500">— meticulous design and execution</span></span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-[#7CFC00] font-bold mt-0.5 shrink-0">▸</span>
+            <span><strong class="text-slate-900">Operational Reliability</strong> <span class="text-slate-500">— performance you can depend on</span></span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-[#FFA500] font-bold mt-0.5 shrink-0">▸</span>
+            <span><strong class="text-slate-900">Safety First</strong> <span class="text-slate-500">— no compromise on people or plant</span></span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-[#e02424] font-bold mt-0.5 shrink-0">▸</span>
+            <span><strong class="text-slate-900">Innovation</strong> <span class="text-slate-500">— continuous improvement of every system</span></span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ INDUSTRIES WE SERVE ══ -->
+<!-- ══ INDUSTRIES WE SERVE ══ -->
+<section class="py-16 sm:py-20 bg-[#0B1220] relative overflow-hidden">
+
+  <!-- Background Blobs -->
   <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute w-[500px] h-[500px] bg-[#1CB5D8]/10 blur-[140px] rounded-full -top-40 -left-40 animate-pulse"></div>
-    <div class="absolute w-[400px] h-[400px] bg-[#7CFC00]/10 blur-[140px] rounded-full bottom-0 right-0 animate-pulse"></div>
+    <div class="absolute right-0 top-0 w-96 h-96 bg-[#1CB5D8]/20 blur-3xl rounded-full"></div>
+    <div class="absolute left-0 bottom-0 w-72 h-72 bg-[#7CFC00]/20 blur-3xl rounded-full"></div>
   </div>
 
-  <div class="max-w-7xl mx-auto px-6 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 relative">
 
-    <!-- TITLE -->
-    <div class="text-center mb-16 reveal">
-      <h2 class="text-5xl font-black">
-        What <span class="text-[#1CB5D8]">Drives</span> Us
+    <!-- Heading -->
+    <div class="text-center mb-12 reveal">
+      <h2 class="text-3xl sm:text-4xl font-black text-white">
+        Industries <span class="text-[#1CB5D8]">We Power</span>
       </h2>
-      <p class="text-slate-500 mt-3">
-        Core principles that power every system we build
+      <p class="text-slate-400 text-sm mt-2">
+        Trusted across 7+ high-demand industrial sectors
       </p>
     </div>
 
-    <!-- LAYOUT: FEATURE + SIDE STACK -->
-    <div class="grid lg:grid-cols-3 gap-10 items-stretch">
+    <!-- Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
 
-      <!-- MAIN FEATURE CARD -->
-      <div class="lg:col-span-1 reveal group relative rounded-3xl overflow-hidden">
-
-        <div class="absolute inset-0 bg-gradient-to-br from-[#0B1220] to-black"></div>
-
-        <div class="relative p-10 text-white h-full flex flex-col justify-between">
-
-          <div>
-            <h3 class="text-3xl font-black">Engineering DNA</h3>
-            <p class="text-slate-300 mt-4">
-              We build systems that don’t just function — they evolve, adapt, and optimize continuously.
-            </p>
-          </div>
-
-          <div class="mt-10 text-sm text-slate-400">
-            Real-time industrial intelligence layer
-          </div>
-
+      <!-- Card -->
+      <div class="group relative rounded-2xl overflow-hidden border border-slate-800">
+        <img src="assets/powerplant.jpg" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+        <div class="absolute bottom-0 p-4 text-center w-full">
+          <h4 class="text-white font-bold text-sm">Power Plants</h4>
+          <p class="text-slate-300 text-xs mt-1">Steam generation for power generation units</p>
+          <div class="mt-2 w-8 h-0.5 bg-[#1CB5D8] mx-auto rounded-full"></div>
         </div>
       </div>
 
-      <!-- STACKED VALUES -->
-      <div class="lg:col-span-2 grid sm:grid-cols-2 gap-6">
-
-        <!-- CARD -->
-        <div class="group p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition reveal">
-          <div class="w-12 h-12 rounded-xl bg-[#1CB5D8]/10 flex items-center justify-center text-xl group-hover:scale-110 transition">
-            ⚙️
-          </div>
-          <h3 class="mt-4 font-bold text-xl group-hover:text-[#1CB5D8] transition">Innovation</h3>
-          <p class="text-slate-600 mt-2">
-            Constant evolution of industrial systems using modern engineering intelligence.
-          </p>
+      <!-- Card -->
+      <div class="group relative rounded-2xl overflow-hidden border border-slate-800">
+        <img src="assets/textile.jpg" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+        <div class="absolute bottom-0 p-4 text-center w-full">
+          <h4 class="text-white font-bold text-sm">Textile</h4>
+          <p class="text-slate-300 text-xs mt-1">Process steam for dyeing and finishing plants</p>
+          <div class="mt-2 w-8 h-0.5 bg-[#FFA500] mx-auto rounded-full"></div>
         </div>
-
-        <!-- CARD -->
-        <div class="group p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition reveal">
-          <div class="w-12 h-12 rounded-xl bg-[#7CFC00]/10 flex items-center justify-center text-xl group-hover:scale-110 transition">
-            🛡️
-          </div>
-          <h3 class="mt-4 font-bold text-xl group-hover:text-[#7CFC00] transition">Reliability</h3>
-          <p class="text-slate-600 mt-2">
-            Built for uninterrupted performance in critical industrial environments.
-          </p>
-        </div>
-
-        <!-- CARD -->
-        <div class="group p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition reveal">
-          <div class="w-12 h-12 rounded-xl bg-[#FFA500]/10 flex items-center justify-center text-xl group-hover:scale-110 transition">
-            ⚡
-          </div>
-          <h3 class="mt-4 font-bold text-xl group-hover:text-[#FFA500] transition">Efficiency</h3>
-          <p class="text-slate-600 mt-2">
-            Maximizing output while reducing operational waste and energy loss.
-          </p>
-        </div>
-
-        <!-- EXTRA EXPERIENCE CARD -->
-        <div class="group p-6 rounded-2xl bg-gradient-to-br from-slate-900 to-black text-white shadow-xl hover:scale-[1.02] transition reveal">
-          <h3 class="text-xl font-bold">System Intelligence</h3>
-          <p class="text-slate-300 mt-2">
-            AI-driven monitoring and predictive optimization across all systems.
-          </p>
-
-          <div class="mt-6 text-xs text-slate-400">
-            Always learning. Always improving.
-          </div>
-        </div>
-
       </div>
+
+      <!-- Card -->
+      <div class="group relative rounded-2xl overflow-hidden border border-slate-800">
+        <img src="assets/Sugar & Food.webp" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+        <div class="absolute bottom-0 p-4 text-center w-full">
+          <h4 class="text-white font-bold text-sm">Sugar & Food</h4>
+          <p class="text-slate-300 text-xs mt-1">High-pressure boilers for food processing units</p>
+          <div class="mt-2 w-8 h-0.5 bg-[#7CFC00] mx-auto rounded-full"></div>
+        </div>
+      </div>
+
+      <!-- Card -->
+      <div class="group relative rounded-2xl overflow-hidden border border-slate-800">
+        <img src="assets/Pharma.avif" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+        <div class="absolute bottom-0 p-4 text-center w-full">
+          <h4 class="text-white font-bold text-sm">Pharma</h4>
+          <p class="text-slate-300 text-xs mt-1">Clean steam and precise control for pharma plants</p>
+          <div class="mt-2 w-8 h-0.5 bg-[#e02424] mx-auto rounded-full"></div>
+        </div>
+      </div>
+
+      <!-- Card -->
+      <div class="group relative rounded-2xl overflow-hidden border border-slate-800">
+        <img src="assets/Steel & Metal.webp" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+        <div class="absolute bottom-0 p-4 text-center w-full">
+          <h4 class="text-white font-bold text-sm">Steel & Metal</h4>
+          <p class="text-slate-300 text-xs mt-1">Heavy-duty boilers for metallurgical processes</p>
+          <div class="mt-2 w-8 h-0.5 bg-[#1CB5D8] mx-auto rounded-full"></div>
+        </div>
+      </div>
+
+      <!-- Card -->
+      <div class="group relative rounded-2xl overflow-hidden border border-slate-800">
+        <img src="assets/Chemical.jpg" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+        <div class="absolute bottom-0 p-4 text-center w-full">
+          <h4 class="text-white font-bold text-sm">Chemical</h4>
+          <p class="text-slate-300 text-xs mt-1">Reliable steam for chemical manufacturing units</p>
+          <div class="mt-2 w-8 h-0.5 bg-[#FFA500] mx-auto rounded-full"></div>
+        </div>
+      </div>
+
+      <!-- Card -->
+      <div class="group relative rounded-2xl overflow-hidden border border-slate-800">
+        <img src="assets/PulpPapersmall.jpg" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+        <div class="absolute bottom-0 p-4 text-center w-full">
+          <h4 class="text-white font-bold text-sm">Paper & Pulp</h4>
+          <p class="text-slate-300 text-xs mt-1">Energy-efficient boilers for pulp and paper mills</p>
+          <div class="mt-2 w-8 h-0.5 bg-[#7CFC00] mx-auto rounded-full"></div>
+        </div>
+      </div>
+
+      <!-- Card -->
+      <div class="group relative rounded-2xl overflow-hidden border border-slate-800">
+        <img src="assets/Cement.jpg" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+        <div class="absolute bottom-0 p-4 text-center w-full">
+          <h4 class="text-white font-bold text-sm">Cement & More</h4>
+          <p class="text-slate-300 text-xs mt-1">Expanding to new sectors every year</p>
+          <div class="mt-2 w-8 h-0.5 bg-[#e02424] mx-auto rounded-full"></div>
+        </div>
+      </div>
+
     </div>
-
   </div>
 </section>
 
-<!-- CTA (LIGHT PREMIUM SECTION - NO DARK THEME) -->
-<section class="relative py-28 overflow-hidden bg-white">
-
-  <!-- soft background glow (no dark) -->
+<!-- ══ TIMELINE (DARK) ══ -->
+<section class="py-16 sm:py-20 bg-[#0B1120] text-white relative overflow-hidden">
   <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute w-[500px] h-[500px] bg-[#1CB5D8]/10 blur-[140px] rounded-full top-10 left-10"></div>
-    <div class="absolute w-[400px] h-[400px] bg-[#7CFC00]/10 blur-[140px] rounded-full bottom-10 right-10"></div>
-    <div class="absolute w-[300px] h-[300px] bg-[#FFA500]/10 blur-[120px] rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+    <div class="absolute top-1/2 left-1/2 w-[500px] h-[500px] bg-[#1CB5D8]/4 blur-[120px] rounded-full -translate-x-1/2 -translate-y-1/2"></div>
   </div>
-
-  <div class="relative max-w-5xl mx-auto text-center px-6 reveal">
-
-    <!-- badge -->
-    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-6">
-      <span class="w-2 h-2 bg-[#1CB5D8] rounded-full animate-pulse"></span>
-      Industrial Engineering Solutions
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 relative">
+    <div class="text-center mb-10 reveal">
+      <h2 class="text-3xl sm:text-4xl font-black text-white">Our <span class="text-[#1CB5D8]">Milestones</span></h2>
+      <p class="text-slate-400 text-sm mt-2">A decade of engineering excellence</p>
     </div>
+    <div class="relative">
+      <div class="absolute left-1/2 top-0 h-full w-[2px] bg-slate-700 -translate-x-1/2"></div>
+      <div class="space-y-9">
 
-    <!-- title -->
-    <h2 class="text-5xl font-black leading-tight text-slate-900">
-      Let’s Build<br>
-      <span class="text-[#1CB5D8]">Something Extraordinary</span>
-    </h2>
+        <div class="relative reveal">
+          <div class="bg-[#111827] p-5 rounded-2xl shadow border border-slate-800 w-[45%] tl-card-left">
+            <div class="text-[#1CB5D8] font-black text-lg mb-1">2015</div>
+            <h4 class="font-bold text-sm mb-1 text-white">Founded in Erode</h4>
+            <p class="text-slate-400 text-xs leading-relaxed">Boilertech Energy Services established with a clear vision: to be India's most trusted industrial boiler engineering firm.</p>
+          </div>
+          <div class="absolute left-[50%] top-5 w-4 h-4 bg-[#1CB5D8] rounded-full border-4 border-[#0B1120] -translate-x-1/2 tl-dot"></div>
+        </div>
 
-    <!-- description -->
-    <p class="mt-6 text-slate-600 text-lg max-w-2xl mx-auto">
-      We collaborate with industries to design intelligent systems that improve efficiency, reliability, and performance at scale.
-    </p>
+        <div class="relative reveal">
+          <div class="ml-auto bg-[#111827] p-5 rounded-2xl shadow border border-slate-800 w-[45%] text-right tl-card-right">
+            <div class="text-[#FFA500] font-black text-lg mb-1">2018</div>
+            <h4 class="font-bold text-sm mb-1 text-white">Energy Optimization Expansion</h4>
+            <p class="text-slate-400 text-xs leading-relaxed">Expanded into energy conservation studies, alternative fuel analysis, and combustion optimization.</p>
+          </div>
+          <div class="absolute left-[50%] top-5 w-4 h-4 bg-[#FFA500] rounded-full border-4 border-[#0B1120] -translate-x-1/2 tl-dot"></div>
+        </div>
 
-    <!-- ACTION PANEL -->
-    <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+        <div class="relative reveal">
+          <div class="bg-[#111827] p-5 rounded-2xl shadow border border-slate-800 w-[45%] tl-card-left">
+            <div class="text-[#7CFC00] font-black text-lg mb-1">2020</div>
+            <h4 class="font-bold text-sm mb-1 text-white">Advanced Engineering Services</h4>
+            <p class="text-slate-400 text-xs leading-relaxed">Launched CFD analysis, IBR piping design, and system re-engineering capabilities.</p>
+          </div>
+          <div class="absolute left-[50%] top-5 w-4 h-4 bg-[#7CFC00] rounded-full border-4 border-[#0B1120] -translate-x-1/2 tl-dot"></div>
+        </div>
 
-      <button class="px-8 py-4 rounded-full bg-[#1CB5D8] text-white hover:scale-105 transition shadow-lg hover:shadow-xl">
-        Start a Project
-      </button>
+        <div class="relative reveal">
+          <div class="ml-auto bg-[#111827] p-5 rounded-2xl shadow border border-slate-800 w-[45%] text-right tl-card-right">
+            <div class="text-[#1CB5D8] font-black text-lg mb-1">2022</div>
+            <h4 class="font-bold text-sm mb-1 text-white">500+ Projects Milestone</h4>
+            <p class="text-slate-400 text-xs leading-relaxed">Crossed 500 successful projects across multiple industries nationwide.</p>
+          </div>
+          <div class="absolute left-[50%] top-5 w-4 h-4 bg-[#1CB5D8] rounded-full border-4 border-[#0B1120] -translate-x-1/2 tl-dot"></div>
+        </div>
 
-      <button class="px-8 py-4 rounded-full border border-slate-300 text-slate-700 hover:bg-slate-100 transition">
-        View Case Studies
-      </button>
+        <div class="relative reveal">
+          <div class="bg-[#111827] p-5 rounded-2xl shadow border border-slate-800 w-[45%] tl-card-left">
+            <div class="text-[#FFA500] font-black text-lg mb-1">2030 →</div>
+            <h4 class="font-bold text-sm mb-1 text-white">Vision: Pan-India Leader</h4>
+            <p class="text-slate-400 text-xs leading-relaxed">Targeting leadership in India's industrial boiler segment and global expansion.</p>
+          </div>
+          <div class="absolute left-[50%] top-5 w-4 h-4 bg-[#FFA500] rounded-full border-4 border-[#0B1120] ring-4 ring-[#FFA500]/20 -translate-x-1/2 tl-dot"></div>
+        </div>
 
+      </div>
     </div>
-
-    <!-- trust line -->
-    <div class="mt-10 text-sm text-slate-500">
-      Trusted by global industrial leaders across 20+ countries
-    </div>
-
   </div>
 </section>
 
-<!-- Footer -->
-<footer class="bg-slate-950 dark:bg-black w-full pt-20 pb-10">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
-<div class="col-span-1 md:col-span-1">
-<div class="text-base sm:text-lg lg:text-xl font-bold text-white mb-6">BoilerTech Energy</div>
-<p class="text-slate-500 font-inter text-sm antialiased mb-6">
-Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aut voluptates molestias eaque dolore commodi natus veritatis atque harum distinctio asperiores nemo sit repudiandae, optio dicta voluptatum culpa ad. Delectus, sequi!                </p>
-<div class="flex gap-4">
-<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-orange-400">
-<span class="material-symbols-outlined text-sm">language</span>
-</div>
-<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-orange-400">
-<span class="material-symbols-outlined text-sm">mail</span>
-</div>
-</div>
-</div>
-<div>
-<h4 class="text-white font-bold mb-6">Expertise</h4>
-<ul class="space-y-4">
-<li><a class="text-slate-500 hover:text-slate-300 transition-transform hover:translate-x-1 inline-block" href="#">Boiler Installation</a></li>
-<li><a class="text-slate-500 hover:text-slate-300 transition-transform hover:translate-x-1 inline-block" href="#">System Design</a></li>
-<li><a class="text-slate-500 hover:text-slate-300 transition-transform hover:translate-x-1 inline-block" href="#">Maintenance</a></li>
-<li><a class="text-slate-500 hover:text-slate-300 transition-transform hover:translate-x-1 inline-block" href="#">Energy Audit</a></li>
-</ul>
-</div>
-<div>
-<h4 class="text-white font-bold mb-6">Company</h4>
-<ul class="space-y-4">
-<li><a class="text-slate-500 hover:text-slate-300 transition-transform hover:translate-x-1 inline-block" href="about.html">About</a></li>
-<li><a class="text-slate-500 hover:text-slate-300 transition-transform hover:translate-x-1 inline-block" href="product.html">Products</a></li>
-<li><a class="text-slate-500 hover:text-slate-300 transition-transform hover:translate-x-1 inline-block" href="services.html">Services</a></li>
-<li><a class="text-slate-500 hover:text-slate-300 transition-transform hover:translate-x-1 inline-block" href="contact.html">Contact</a></li>
-</ul>
-</div>
-<div>
-<h4 class="text-white font-bold mb-6">Global HQ</h4>
-<p class="text-slate-500 text-sm leading-relaxed">
-                    1200 Industrial Avenue<br/>
-                    Engineering District, Sector 4<br/>
-                    support@boilertech-energy.com<br/>
-                    +1 (555) 902-3000
-</p>
-</div>
-</div>
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20 pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-4">
-<p class="text-slate-500 text-sm antialiased">© 2026 BoilerTech Energy. All rights reserved. Precision Industrial Engineering.</p>
-<div class="flex gap-6">
-<a class="text-slate-500 hover:text-slate-300 text-sm" href="#">Privacy Policy</a>
-<a class="text-slate-500 hover:text-slate-300 text-sm" href="#">Terms of Service</a>
-<a class="text-slate-500 hover:text-slate-300 text-sm" href="#">Cookie Policy</a>
-<a class="text-slate-500 hover:text-slate-300 text-sm" href="#">Sitemap</a>
-</div>
-</div>
+
+<!-- ══ WHY CHOOSE US ══ -->
+<section class="py-16 sm:py-20 bg-[#F8FAFC] relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute w-96 h-96 blob-blue opacity-40 -top-32 -right-32"></div>
+    <div class="absolute w-80 h-80 blob-orange opacity-30 bottom-0 left-0"></div>
+  </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 relative">
+    <div class="text-center mb-10 reveal">
+      <h2 class="text-3xl sm:text-4xl font-black">Why <span class="accent">Choose</span> Boilertech?</h2>
+      <p class="text-slate-500 text-sm mt-2">Advantages that set us apart in every project we take on</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <div class="p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:-translate-y-1 hover:shadow-md transition reveal">
+        <div class="w-12 h-12 rounded-2xl bg-[#1CB5D8]/10 flex items-center justify-center text-2xl mb-4">🔬</div>
+        <h3 class="font-bold text-base mb-2">CFD-Driven Analysis</h3>
+        <p class="text-slate-500 text-xs leading-relaxed">We use Computational Fluid Dynamics to simulate and optimize boiler performance before any physical work begins — reducing risk and maximizing results.</p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:-translate-y-1 hover:shadow-md transition reveal">
+        <div class="w-12 h-12 rounded-2xl bg-[#FFA500]/10 flex items-center justify-center text-2xl mb-4">📋</div>
+        <h3 class="font-bold text-base mb-2">IBR Certified</h3>
+        <p class="text-slate-500 text-xs leading-relaxed">All our installations and designs adhere strictly to Indian Boiler Regulations (IBR) ensuring full legal compliance and safety at every stage.</p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:-translate-y-1 hover:shadow-md transition reveal">
+        <div class="w-12 h-12 rounded-2xl bg-[#7CFC00]/10 flex items-center justify-center text-2xl mb-4">🌱</div>
+        <h3 class="font-bold text-base mb-2">Eco-Friendly Solutions</h3>
+        <p class="text-slate-500 text-xs leading-relaxed">We integrate alternative fuel systems and emission control measures that reduce your plant's carbon footprint without sacrificing performance.</p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:-translate-y-1 hover:shadow-md transition reveal">
+        <div class="w-12 h-12 rounded-2xl bg-[#e02424]/10 flex items-center justify-center text-2xl mb-4">🛡️</div>
+        <h3 class="font-bold text-base mb-2">Zero-Downtime Focus</h3>
+        <p class="text-slate-500 text-xs leading-relaxed">Our shutdown audit and preventive maintenance programs are designed to catch issues before they become failures — keeping your plant running 24/7.</p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:-translate-y-1 hover:shadow-md transition reveal">
+        <div class="w-12 h-12 rounded-2xl bg-[#1CB5D8]/10 flex items-center justify-center text-2xl mb-4">⚡</div>
+        <h3 class="font-bold text-base mb-2">Fuel Cost Savings</h3>
+        <p class="text-slate-500 text-xs leading-relaxed">Our combustion optimization and energy audit services have delivered up to 15–25% fuel savings for clients across multiple sectors.</p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:-translate-y-1 hover:shadow-md transition reveal">
+        <!-- <div class="w-12 h-12 rounded-2xl bg-[#1CB5D8]/10 flex items-center justify-center text-2xl mb-4"></div> -->
+        <div class="w-12 h-12 rounded-2xl bg-[#FFA500]/15 flex items-center justify-center text-2xl mb-4">🤝</div>
+        <h3 class="font-bold text-base mb-2 ">Long-Term Partnership</h3>
+        <p class="text-slate-500 text-xs leading-relaxed">We don't just install and leave. We stay with you for the lifetime of your plant — providing ongoing support, training, and system upgrades.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ WHAT DRIVES US ══ -->
+<section class="py-16 sm:py-20 bg-white relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute w-96 h-96 blob-blue opacity-30 -top-32 -left-32"></div>
+    <div class="absolute w-80 h-80 blob-green opacity-30 bottom-0 right-0"></div>
+  </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 relative">
+    <div class="text-center mb-10 reveal">
+      <h2 class="text-3xl sm:text-5xl font-black">What <span class="accent">Drives</span> Us</h2>
+      <p class="text-slate-500 text-sm mt-2">Core principles that power every system we build</p>
+    </div>
+    <div class="grid lg:grid-cols-3 gap-5 items-stretch">
+      <div class="lg:col-span-1 reveal relative rounded-2xl overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#0B1220] to-black"></div>
+        <div class="relative p-8 h-full flex flex-col justify-between">
+          <div>
+            <h3 class="text-2xl font-black text-white">Engineering DNA</h3>
+            <p class="text-slate-300 text-sm mt-3 leading-relaxed">We build boiler systems that don't just function — they evolve, adapt, and optimize continuously. Every solution is rooted in deep technical expertise and field-proven precision.</p>
+          </div>
+          <div class="mt-8 text-xs text-slate-500">Real-time industrial intelligence layer</div>
+        </div>
+      </div>
+      <div class="lg:col-span-2 grid sm:grid-cols-2 gap-4">
+        <div class="group p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition reveal">
+          <div class="w-10 h-10 rounded-xl bg-[#1CB5D8]/10 flex items-center justify-center text-lg group-hover:scale-110 transition">⚙️</div>
+          <h3 class="mt-4 font-bold text-sm group-hover:text-[#1CB5D8] transition">Innovation</h3>
+          <p class="text-slate-500 text-xs mt-1.5 leading-relaxed">Constant evolution through CFD analysis, re-engineering, and modern combustion science.</p>
+        </div>
+        <div class="group p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition reveal">
+          <div class="w-10 h-10 rounded-xl bg-[#7CFC00]/10 flex items-center justify-center text-lg group-hover:scale-110 transition">🛡️</div>
+          <h3 class="mt-4 font-bold text-sm group-hover:text-[#7CFC00] transition">Reliability</h3>
+          <p class="text-slate-500 text-xs mt-1.5 leading-relaxed">Built for uninterrupted performance in critical industrial environments with zero tolerance for downtime.</p>
+        </div>
+        <div class="group p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition reveal">
+          <div class="w-10 h-10 rounded-xl bg-[#FFA500]/10 flex items-center justify-center text-lg group-hover:scale-110 transition">⚡</div>
+          <h3 class="mt-4 font-bold text-sm group-hover:text-[#FFA500] transition">Efficiency</h3>
+          <p class="text-slate-500 text-xs mt-1.5 leading-relaxed">Maximizing steam output while reducing fuel consumption, operational waste, and energy loss across every system.</p>
+        </div>
+        <div class="group p-6 rounded-2xl bg-gradient-to-br from-slate-900 to-black hover:scale-[1.02] transition reveal">
+          <h3 class="font-bold text-sm text-white">System Intelligence</h3>
+          <p class="text-slate-300 text-xs mt-1.5 leading-relaxed">CFD-driven monitoring, predictive failure analysis, and data-backed optimization across all boiler systems.</p>
+          <div class="mt-5 text-xs text-slate-500">Always learning. Always improving.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ CERTIFICATIONS & STANDARDS ══ -->
+<section class="py-16 bg-[#0B1220] dark-section relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-10 reveal">
+      <h2 class="text-3xl sm:text-4xl font-black">Standards &amp; <span class="text-[#1CB5D8]">Certifications</span></h2>
+      <p class="text-slate-400 text-sm mt-2">Our work meets the highest regulatory and quality benchmarks</p>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 reveal">
+
+      <div class="flex flex-col items-center text-center p-5 rounded-2xl border border-slate-800 bg-slate-900/50">
+        <div class="text-3xl mb-3">📜</div>
+        <div class="text-[#1CB5D8] font-black text-base">IBR</div>
+        <div class="text-slate-400 text-xs mt-1">Indian Boiler Regulations Compliant</div>
+      </div>
+
+      <div class="flex flex-col items-center text-center p-5 rounded-2xl border border-slate-800 bg-slate-900/50">
+        <div class="text-3xl mb-3">✅</div>
+        <div class="text-[#FFA500] font-black text-base">ISO</div>
+        <div class="text-slate-400 text-xs mt-1">Quality Management Standards</div>
+      </div>
+
+      <div class="flex flex-col items-center text-center p-5 rounded-2xl border border-slate-800 bg-slate-900/50">
+        <div class="text-3xl mb-3">🔬</div>
+        <div class="text-[#7CFC00] font-black text-base">CFD</div>
+        <div class="text-slate-400 text-xs mt-1">Computational Fluid Dynamics Certified</div>
+      </div>
+
+      <div class="flex flex-col items-center text-center p-5 rounded-2xl border border-slate-800 bg-slate-900/50">
+        <div class="text-3xl mb-3">🌿</div>
+        <div class="text-[#e02424] font-black text-base">GREEN</div>
+        <div class="text-slate-400 text-xs mt-1">Eco-Efficiency Certified Solutions</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ CONTACT STRIP ══ -->
+<section class="py-12 bg-white border-t border-slate-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 reveal">
+    <div class="bg-[#F8FAFC] rounded-2xl border border-slate-100 p-6 sm:p-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="flex items-start gap-3">
+        <div class="w-9 h-9 rounded-xl bg-[#1CB5D8]/10 flex items-center justify-center text-base shrink-0">📍</div>
+        <div>
+          <div class="font-bold text-sm text-slate-900 mb-1">Office Address</div>
+          <p class="text-slate-500 text-xs leading-relaxed">130/1, First Floor, Periyar Street,<br>Backside of EDCC Bank, Erode – 638001</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-9 h-9 rounded-xl bg-[#FFA500]/10 flex items-center justify-center text-base shrink-0">📞</div>
+        <div>
+          <div class="font-bold text-sm text-slate-900 mb-1">Contact</div>
+          <a href="tel:7708397080" class="text-[#1CB5D8] text-xs font-semibold block hover:underline">+91 77083 97080</a>
+          <a href="mailto:director@boilertechenergy.com" class="text-slate-400 text-xs hover:text-slate-600 block mt-1">director@boilertechenergy.com</a>
+          <a href="mailto:boilertechenergy@gmail.com" class="text-slate-400 text-xs hover:text-slate-600 block">boilertechenergy@gmail.com</a>
+        </div>
+      </div>
+      <div class="flex items-start gap-3 sm:col-span-2 lg:col-span-1">
+        <div class="w-9 h-9 rounded-xl bg-[#7CFC00]/10 flex items-center justify-center text-base shrink-0">🌐</div>
+        <div>
+          <div class="font-bold text-sm text-slate-900 mb-1">Online</div>
+          <a href="https://www.boilertechenergy.com" target="_blank" class="text-[#1CB5D8] text-xs font-semibold hover:underline block">www.boilertechenergy.com</a>
+          <p class="text-slate-400 text-xs mt-1">Regd: 219-A, Ramamoorthy Nagar,<br>Krishnampalayam Road, Erode – 638003</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ CTA ══ -->
+<section class="py-16 sm:py-24 bg-white relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute w-96 h-96 bg-[#1CB5D8]/8 blur-[130px] rounded-full top-0 left-0"></div>
+    <div class="absolute w-80 h-80 bg-[#FFA500]/8 blur-[130px] rounded-full bottom-0 right-0"></div>
+  </div>
+  <div class="relative max-w-3xl mx-auto text-center px-4 sm:px-6 reveal">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-xs mb-5">
+      <span class="w-1.5 h-1.5 bg-[#1CB5D8] rounded-full animate-pulse"></span>
+      Industrial Boiler Engineering Solutions
+    </div>
+    <h2 class="text-3xl sm:text-5xl text-gray-700 leading-tight">
+      Let's Build<br><span class="accent">Something Extraordinary</span>
+    </h2>
+    <p class="mt-5 text-slate-500 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+      We collaborate with industries to design intelligent boiler systems that improve efficiency, reliability, and performance at scale. Let's talk about your plant's challenges.
+    </p>
+    <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
+      <a href="contact.html">
+        <button class="w-full sm:w-auto px-8 py-3 rounded-full bg-[#1CB5D8] text-white text-sm font-semibold hover:scale-105 transition shadow-md">Start a Project</button>
+      </a>
+      <a href="services.html">
+        <button class="w-full sm:w-auto px-8 py-3 rounded-full border border-slate-200 text-slate-700 text-sm font-semibold hover:bg-slate-50 transition">View Our Services</button>
+      </a>
+    </div>
+    <p class="mt-7 text-xs text-slate-400">Trusted by industrial leaders across power, steel, textile, pharma &amp; more</p>
+  </div>
+</section>
+
+
+<!-- ══ FOOTER ══ -->
+<footer class="bg-slate-950 pt-14 pb-8">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <div>
+      <div class="flex items-center gap-3 mb-3">
+        <img src="Logo.png" alt="Logo" class="h-9 w-auto"/>
+        <div class="mano font-black text-lg text-white">Boiler<span class="text-[#1CB5D8]">Tech</span></div>
+      </div>
+      <div class="text-[#1CB5D8] text-xs font-semibold mb-3">Your Trusted Performance Partner.</div>
+      <p class="text-slate-500 text-xs leading-relaxed mb-5">Optimizing industrial boiler performance through engineering precision, operational reliability, and long-term sustainability since 2015.</p>
+      <div class="flex gap-3">
+        <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-[#FFA500] hover:bg-slate-700 cursor-pointer transition"><span class="material-symbols-outlined text-sm">language</span></div>
+        <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-[#FFA500] hover:bg-slate-700 cursor-pointer transition"><span class="material-symbols-outlined text-sm">mail</span></div>
+      </div>
+    </div>
+    <div>
+      <h4 class="font-bold text-sm mb-5 text-white">Expertise</h4>
+      <ul class="space-y-3 text-xs">
+        <li><a class="text-slate-500 hover:text-slate-300 transition" href="#">Boiler Performance Study</a></li>
+        <li><a class="text-slate-500 hover:text-slate-300 transition" href="#">Shutdown Audit</a></li>
+        <li><a class="text-slate-500 hover:text-slate-300 transition" href="#">Energy Conservation</a></li>
+        <li><a class="text-slate-500 hover:text-slate-300 transition" href="#">CFD Analysis</a></li>
+        <li><a class="text-slate-500 hover:text-slate-300 transition" href="#">IBR Piping Design</a></li>
+        <li><a class="text-slate-500 hover:text-slate-300 transition" href="#">Capacity Enhancement</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-bold text-sm mb-5 text-white">Company</h4>
+      <ul class="space-y-3 text-xs">
+        <li><a class="text-slate-500 hover:text-slate-300 transition" href="about.html">About Us</a></li>
+        <li><a class="text-slate-500 hover:text-slate-300 transition" href="services.html">Services</a></li>
+        <li><a class="text-slate-500 hover:text-slate-300 transition" href="products.html">Products</a></li>
+        <li><a class="text-slate-500 hover:text-slate-300 transition" href="contact.html">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-bold text-sm mb-5 text-white">Headquarters</h4>
+      <p class="text-slate-500 text-xs leading-relaxed">130/1, First Floor, Periyar Street,<br>Erode – 638001, Tamil Nadu<br><br>
+        <a href="tel:7708397080" class="text-[#1CB5D8] hover:underline">+91 77083 97080</a><br>
+        <a href="mailto:director@boilertechenergy.com" class="text-slate-500 hover:text-slate-300 break-all">director@boilertechenergy.com</a>
+      </p>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 mt-10 pt-6 border-t border-slate-900 flex flex-col sm:flex-row justify-between items-center gap-3">
+    <p class="text-slate-600 text-xs">© 2026 BoilerTech Energy Services. All rights reserved.</p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a class="text-slate-600 hover:text-slate-400 text-xs" href="#">Privacy Policy</a>
+      <a class="text-slate-600 hover:text-slate-400 text-xs" href="#">Terms of Service</a>
+      <a class="text-slate-600 hover:text-slate-400 text-xs" href="#">Sitemap</a>
+    </div>
+  </div>
 </footer>
-
-<script>
-const elements = document.querySelectorAll('.reveal');
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('show');
-    }
-  });
-}, { threshold: 0.15 });
-
-elements.forEach(el => observer.observe(el));
-
-const menuBtn = document.getElementById("menuBtn");
-const mobileMenu = document.getElementById("mobileMenu");
-
-let open = false;
-
-menuBtn.addEventListener("click", () => {
-  open = !open;
-
-  if (open) {
-    mobileMenu.style.maxHeight = "400px";
-  } else {
-    mobileMenu.style.maxHeight = "0px";
-  }
-});
-
-</script>
 <div id="chatbot-container"></div>
-
 <script>
 fetch("chatbot.html")
-  .then(res => res.text())
-  .then(data => {
-    document.getElementById("chatbot-container").innerHTML = data;
-  });
+  .then(r => r.text())
+  .then(d => { document.getElementById("chatbot-container").innerHTML = d; })
+  .catch(() => {});
 </script>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+const btn = document.getElementById('menuBtn');
+const menu = document.getElementById('mobileMenu');
+let open = false;
+btn.addEventListener('click', () => {
+  open = !open;
+  menu.style.maxHeight = open ? '420px' : '0px';
+});
+</script>
+
 </body>
 </html>
